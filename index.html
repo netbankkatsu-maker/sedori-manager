@@ -271,7 +271,7 @@ function handleSignIn() {
   var inp = document.getElementById('setup-client-id').value.trim();
   if (inp) { cfg.clientId = inp; localStorage.setItem('clientId', inp); }
   if (!cfg.clientId) {
-    alert('Client ID&#12434;&#35373;&#23450;&#12363;&#12425;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;');
+    alert('Client ID\u3092\u8A2D\u5B9A\u304B\u3089\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002');
     document.getElementById('setup-screen').style.display = 'block';
     return;
   }
@@ -284,7 +284,7 @@ function initTokenClient() {
     client_id: cfg.clientId,
     scope: SCOPES,
     callback: function(resp) {
-      if (resp.error) { showToast('OAuth&#12456;&#12521;&#12540;: ' + resp.error, 'danger'); return; }
+      if (resp.error) { showToast('OAuth\u30A8\u30E9\u30FC: ' + resp.error, 'danger'); return; }
       accessToken = resp.access_token;
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -317,24 +317,24 @@ async function sheetAll(sheet) { return sheetGet(sheet + '!A2:Z'); }
 
 // ===== SPREADSHEET SETUP =====
 async function initSpreadsheet() {
-  showSpinner('&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#28310;&#20633;&#20013;...');
+  showSpinner('\u30B9\u30D7\u30EC\u30C3\u30C9\u30B7\u30FC\u30C8\u3092\u6E96\u5099\u4E2D...');
   try {
     if (!cfg.spreadsheetId) {
       var ss = await api('POST', SHEETS_BASE, {
-        properties: { title: '&#12379;&#12393;&#12426;&#12524;&#12471;&#12540;&#12488;&#12367;&#12435;' },
-        sheets: [{ properties: { title: '&#22312;&#24235;', sheetId: 0 } }, { properties: { title: '&#22770;&#19978;', sheetId: 1 } }, { properties: { title: '&#12524;&#12471;&#12540;&#12488;', sheetId: 2 } }]
+        properties: { title: '\u305B\u3069\u308A\u30EC\u30B7\u30FC\u30C8\u304F\u3093' },
+        sheets: [{ properties: { title: '\u5728\u5EAB', sheetId: 0 } }, { properties: { title: '\u58F2\u4E0A', sheetId: 1 } }, { properties: { title: '\u30EC\u30B7\u30FC\u30C8', sheetId: 2 } }]
       });
       cfg.spreadsheetId = ss.spreadsheetId;
       localStorage.setItem('spreadsheetId', cfg.spreadsheetId);
       document.getElementById('set-ss-id').value = cfg.spreadsheetId;
     }
-    await sheetUpdate('&#22312;&#24235;!A1:E1', [['&#21830;&#21697;&#21517;', '&#25968;&#37327;', '&#20181;&#20837;&#21336;&#20385;', '&#20181;&#20837;&#26085;', '&#24215;&#33303;&#21517;']]);
-    await sheetUpdate('&#22770;&#19978;!A1:I1', [['ID', '&#21830;&#21697;&#21517;', '&#36009;&#22770;&#20385;&#26684;', '&#36865;&#26009;', '&#12503;&#12521;&#12483;&#12488;&#12501;&#12457;&#12540;&#12512;', '&#26085;&#20184;', '&#32016;&#20184;&#21830;&#21697;', '&#20181;&#20837;&#21336;&#20385;', '&#21033;&#30410;']]);
-    await sheetUpdate('&#12524;&#12471;&#12540;&#12488;!A1', [['&#12495;&#12483;&#12471;&#12517;']]);
+    await sheetUpdate('\u5728\u5EAB!A1:E1', [['\u5546\u54C1\u540D', '\u6570\u91CF', '\u4ED5\u5165\u5358\u4FA1', '\u4ED5\u5165\u65E5', '\u5E97\u8217\u540D']]);
+    await sheetUpdate('\u58F2\u4E0A!A1:I1', [['ID', '\u5546\u54C1\u540D', '\u8CA9\u58F2\u4FA1\u683C', '\u9001\u6599', '\u30D7\u30E9\u30C3\u30C8\u30D5\u30A9\u30FC\u30E0', '\u65E5\u4ED8', '\u7D10\u4ED8\u5546\u54C1', '\u4ED5\u5165\u5358\u4FA1', '\u5229\u76CA']]);
+    await sheetUpdate('\u30EC\u30B7\u30FC\u30C8!A1', [['\u30CF\u30C3\u30B7\u30E5']]);
     updateSsLink();
     hideSpinner();
-    showToast('&#12471;&#12540;&#12488;&#12398;&#28310;&#20633;&#23436;&#20102;&#65281;', 'success');
-  } catch(e) { hideSpinner(); showToast('&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    showToast('\u30B7\u30FC\u30C8\u306E\u6E96\u5099\u5B8C\u4E86\uFF01', 'success');
+  } catch(e) { hideSpinner(); showToast('\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 function updateSsLink() {
@@ -347,12 +347,12 @@ function updateSsLink() {
 // ===== INIT =====
 async function onSignedIn() {
   var d = new Date();
-  document.getElementById('header-date').textContent = d.getFullYear() + '&#24180;' + (d.getMonth()+1) + '&#26376;' + d.getDate() + '&#26085;';
+  document.getElementById('header-date').textContent = d.getFullYear() + '\u5E74' + (d.getMonth()+1) + '\u6708' + d.getDate() + '\u65E5';
   document.getElementById('set-client-id').value = cfg.clientId;
   document.getElementById('set-ss-id').value = cfg.spreadsheetId;
   updateSsLink();
   if (!cfg.spreadsheetId) {
-    showToast('&#35373;&#23450;&#12479;&#12502;&#12363;&#12425;&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#20316;&#25104;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'info');
+    showToast('\u8A2D\u5B9A\u30BF\u30D6\u304B\u3089\u30B9\u30D7\u30EC\u30C3\u30C9\u30B7\u30FC\u30C8\u3092\u4F5C\u6210\u3057\u3066\u304F\u3060\u3055\u3044', 'info');
     switchTab('settings');
     return;
   }
@@ -375,7 +375,7 @@ function switchTab(tab) {
 async function refreshDashboard() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('&#22770;&#19978;');
+    var rows = await sheetAll('\u58F2\u4E0A');
     var ym = new Date().toISOString().slice(0,7);
     var sales = 0, profit = 0;
     rows.forEach(function(r) { if ((r[5]||'').startsWith(ym)) { sales += Number(r[2])||0; profit += Number(r[8])||0; } });
@@ -390,18 +390,18 @@ async function refreshDashboard() {
 async function loadInventory() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('&#22312;&#24235;');
+    var rows = await sheetAll('\u5728\u5EAB');
     inventoryData = rows.map(function(r){ return { name:r[0]||'', qty:Number(r[1])||0, costPrice:Number(r[2])||0, purchaseDate:r[3]||'', storeName:r[4]||'' }; }).filter(function(i){ return i.name; });
     invNames = inventoryData.map(function(i){ return i.name; });
     renderInventory();
-  } catch(e) { showToast('&#22312;&#24235;&#21462;&#24471;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { showToast('\u5728\u5EAB\u53D6\u5F97\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 function renderInventory() {
   var tbody = document.getElementById('inventory-tbody');
-  if (!inventoryData.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">&#22312;&#24235;&#12487;&#12540;&#12479;&#12364;&#12354;&#12426;&#12414;&#12379;&#12435;</td></tr>'; return; }
+  if (!inventoryData.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">\u5728\u5EAB\u30C7\u30FC\u30BF\u304C\u3042\u308A\u307E\u305B\u3093</td></tr>'; return; }
   tbody.innerHTML = inventoryData.map(function(i, idx) {
-    var s = i.qty <= 0 ? '<span class="badge-ng">&#22312;&#24235;&#20999;&#12428;</span>' : i.qty <= 1 ? '<span class="badge-warn">&#27531;&#12426;&#12431;&#12378;&#12363;</span>' : '<span class="badge-ok">&#22312;&#24235;&#12354;&#12426;</span>';
+    var s = i.qty <= 0 ? '<span class="badge-ng">\u5728\u5EAB\u5207\u308C</span>' : i.qty <= 1 ? '<span class="badge-warn">\u6B8B\u308A\u308F\u305A\u304B</span>' : '<span class="badge-ok">\u5728\u5EAB\u3042\u308A</span>';
     return '<tr id="inv-row-' + idx + '" data-idx="' + idx + '"><td class="inv-name">' + escHtml(i.name) + '</td><td class="text-center fw-bold inv-qty">' + i.qty + '</td><td class="text-end inv-cost">' + fmt(i.costPrice) + '</td><td class="text-center">' + s + '</td><td class="text-center"><button class="inv-edit-btn" onclick="invStartEdit(' + idx + ')"><i class="bi bi-pencil"></i></button></td></tr>';
   }).join('');
 }
@@ -415,7 +415,7 @@ function invStartEdit(idx) {
   tr.querySelector('.inv-qty').innerHTML   = '<input type="number" value="' + i.qty + '" style="width:4em">';
   tr.querySelector('.inv-cost').innerHTML  = '<input type="number" value="' + i.costPrice + '" style="width:5em">';
   tr.cells[3].innerHTML = '';
-  tr.cells[4].innerHTML = '<button class="inv-save-btn" onclick="invSaveEdit(' + idx + ')">&#20445;&#23384;</button><button class="inv-cancel-btn" onclick="invCancelEdit(' + idx + ')">&#215;</button>';
+  tr.cells[4].innerHTML = '<button class="inv-save-btn" onclick="invSaveEdit(' + idx + ')">\u4FDD\u5B58</button><button class="inv-cancel-btn" onclick="invCancelEdit(' + idx + ')">\u00D7</button>';
 }
 function invCancelEdit(idx) { delete document.getElementById('inv-row-'+idx).dataset.editing; loadInventory(); }
 async function invSaveEdit(idx) {
@@ -423,46 +423,46 @@ async function invSaveEdit(idx) {
   var name = tr.querySelector('.inv-name input').value.trim();
   var qty  = parseInt(tr.querySelector('.inv-qty input').value) || 0;
   var cost = parseInt(tr.querySelector('.inv-cost input').value) || 0;
-  if (!name) { showToast('&#21830;&#21697;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
-  showSpinner('&#26356;&#26032;&#20013;...');
+  if (!name) { showToast('\u5546\u54C1\u540D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044', 'warning'); return; }
+  showSpinner('\u66F4\u65B0\u4E2D...');
   try {
     var row = idx + 2;
     var old = inventoryData[idx];
-    await sheetUpdate('&#22312;&#24235;!A' + row + ':E' + row, [[name, qty, cost, old.purchaseDate, old.storeName]]);
-    hideSpinner(); showToast('&#26356;&#26032;&#12375;&#12414;&#12375;&#12383;', 'success'); loadInventory();
-  } catch(e) { hideSpinner(); showToast('&#26356;&#26032;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    await sheetUpdate('\u5728\u5EAB!A' + row + ':E' + row, [[name, qty, cost, old.purchaseDate, old.storeName]]);
+    hideSpinner(); showToast('\u66F4\u65B0\u3057\u307E\u3057\u305F', 'success'); loadInventory();
+  } catch(e) { hideSpinner(); showToast('\u66F4\u65B0\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 // ===== SALES =====
 async function loadSales() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('&#22770;&#19978;');
+    var rows = await sheetAll('\u58F2\u4E0A');
     salesData = rows.map(function(r, i) {
       return { _row:i+2, saleId:r[0]||'', name:r[1]||'', salePrice:Number(r[2])||0, shipping:Number(r[3])||0, platform:r[4]||'', date:r[5]||'', linkedInvName:r[6]||'', costPrice:Number(r[7])||0, profit:Number(r[8])||0, linked:!!(r[6]&&r[6].trim()) };
     }).filter(function(s){ return s.name; }).reverse();
-    if (!invNames.length) { var ir = await sheetAll('&#22312;&#24235;'); invNames = ir.map(function(r){ return r[0]; }).filter(Boolean); }
+    if (!invNames.length) { var ir = await sheetAll('\u5728\u5EAB'); invNames = ir.map(function(r){ return r[0]; }).filter(Boolean); }
     renderSalesList();
-  } catch(e) { showToast('&#22770;&#19978;&#21462;&#24471;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { showToast('\u58F2\u4E0A\u53D6\u5F97\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 function renderSalesList() {
   var el = document.getElementById('sales-list');
-  if (!salesData.length) { el.innerHTML = '<div class="text-center text-muted py-4" style="font-size:.83rem">&#22770;&#19978;&#12487;&#12540;&#12479;&#12364;&#12354;&#12426;&#12414;&#12379;&#12435;</div>'; return; }
+  if (!salesData.length) { el.innerHTML = '<div class="text-center text-muted py-4" style="font-size:.83rem">\u58F2\u4E0A\u30C7\u30FC\u30BF\u304C\u3042\u308A\u307E\u305B\u3093</div>'; return; }
   el.innerHTML = '<div class="sales-card">' + salesData.map(function(s,i){ return renderSaleRow(s,i); }).join('') + '</div>';
 }
 
 function renderSaleRow(s, idx) {
-  var profitHtml = s.linked ? '<div class="mt-1"><span class="' + (s.profit>=0?'sale-profit-pos':'sale-profit-neg') + '">&#21033;&#30410; ' + fmt(s.profit) + '</span> <span style="color:#aaa;font-size:.72rem">&#20181;&#20837; ' + fmt(s.costPrice) + '</span></div>' : '';
-  var badge = s.linked ? '<span class="badge-linked"><i class="bi bi-link-45deg"></i>&#32016;&#20184;&#28168;</span>' : '<span class="badge-unlinked">&#26410;&#32016;&#20184;&#12369;</span>';
+  var profitHtml = s.linked ? '<div class="mt-1"><span class="' + (s.profit>=0?'sale-profit-pos':'sale-profit-neg') + '">\u5229\u76CA ' + fmt(s.profit) + '</span> <span style="color:#aaa;font-size:.72rem">\u4ED5\u5165 ' + fmt(s.costPrice) + '</span></div>' : '';
+  var badge = s.linked ? '<span class="badge-linked"><i class="bi bi-link-45deg"></i>\u7D10\u4ED8\u6E08</span>' : '<span class="badge-unlinked">\u672A\u7D10\u4ED8\u3051</span>';
   var linkHtml = '';
   if (!s.linked) {
-    var opts = '<option value="">&#8212; &#22312;&#24235;&#12363;&#12425;&#36984;&#25246; &#8212;</option>' + invNames.map(function(n){ return '<option value="' + escHtml(n).replace(/"/g,'&quot;') + '">' + escHtml(n) + '</option>'; }).join('');
+    var opts = '<option value="">\u2014 \u5728\u5EAB\u304B\u3089\u9078\u629E \u2014</option>' + invNames.map(function(n){ return '<option value="' + escHtml(n).replace(/"/g,'&quot;') + '">' + escHtml(n) + '</option>'; }).join('');
     linkHtml = '<select class="sale-action-btn" style="width:auto;font-size:.72rem" onchange="linkSaleSelect(' + idx + ',this)">' + opts + '</select>'
-      + '<button class="sale-action-btn ms-1" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:.72rem" onclick="openSalePurchaseModal(' + idx + ')"><i class="bi bi-box-seam me-1"></i>&#20181;&#20837;&#12428;&#30331;&#37682;</button>';
+      + '<button class="sale-action-btn ms-1" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:.72rem" onclick="openSalePurchaseModal(' + idx + ')"><i class="bi bi-box-seam me-1"></i>\u4ED5\u5165\u308C\u767B\u9332</button>';
   }
-  var unlinkHtml = s.linked ? '<button onclick="unlinkSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer"><i class="bi bi-scissors me-1"></i>&#32016;&#20184;&#12369;&#35299;&#38500;</button>' : '';
-  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' &#12539; ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + '</div></div>';
+  var unlinkHtml = s.linked ? '<button onclick="unlinkSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer"><i class="bi bi-scissors me-1"></i>\u7D10\u4ED8\u3051\u89E3\u9664</button>' : '';
+  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' \u30FB ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + '</div></div>';
 }
 
 async function linkSaleSelect(idx, sel) { if (sel.value) await linkSale(idx, sel.value); }
@@ -471,21 +471,21 @@ async function linkSale(idx, invName) {
   var inv = inventoryData.find(function(i){ return i.name === invName; });
   var cost = inv ? inv.costPrice : 0;
   var profit = s.salePrice - Math.round(s.salePrice * 0.10) - s.shipping - cost;
-  showSpinner('&#32016;&#20184;&#12369;&#20013;...');
+  showSpinner('\u7D10\u4ED8\u3051\u4E2D...');
   try {
-    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [[invName, cost, profit]]);
+    await sheetUpdate('\u58F2\u4E0A!G' + s._row + ':I' + s._row, [[invName, cost, profit]]);
     salesData[idx].linked = true; salesData[idx].linkedInvName = invName; salesData[idx].costPrice = cost; salesData[idx].profit = profit;
-    hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12375;&#12414;&#12375;&#12383;', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('\u7D10\u4ED8\u3051\u3057\u307E\u3057\u305F', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('\u7D10\u4ED8\u3051\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 async function unlinkSale(idx) {
   var s = salesData[idx];
-  showSpinner('&#35299;&#38500;&#20013;...');
+  showSpinner('\u89E3\u9664\u4E2D...');
   try {
-    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [['', 0, 0]]);
+    await sheetUpdate('\u58F2\u4E0A!G' + s._row + ':I' + s._row, [['', 0, 0]]);
     salesData[idx].linked = false; salesData[idx].linkedInvName = ''; salesData[idx].costPrice = 0; salesData[idx].profit = 0;
-    hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12434;&#35299;&#38500;&#12375;&#12414;&#12375;&#12383;', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('&#35299;&#38500;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('\u7D10\u4ED8\u3051\u3092\u89E3\u9664\u3057\u307E\u3057\u305F', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('\u89E3\u9664\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 function openSalePurchaseModal(idx) {
   _salePurchaseIdx = idx;
@@ -505,17 +505,17 @@ async function submitSalePurchase() {
   var price = parseInt(document.getElementById('sp-price').value) || 0;
   var qty   = parseInt(document.getElementById('sp-qty').value) || 1;
   var date  = document.getElementById('sp-date').value;
-  var store = document.getElementById('sp-store').value.trim() || '&#25163;&#21205;&#30331;&#37682;';
-  if (price <= 0) { showToast('&#20181;&#20837;&#21336;&#20385;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
+  var store = document.getElementById('sp-store').value.trim() || '\u624B\u52D5\u767B\u9332';
+  if (price <= 0) { showToast('\u4ED5\u5165\u5358\u4FA1\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044', 'warning'); return; }
   closeSalePurchaseModal();
-  showSpinner('&#20181;&#20837;&#12428;&#30331;&#37682;&#12539;&#32016;&#20184;&#12369;&#20013;...');
+  showSpinner('\u4ED5\u5165\u308C\u767B\u9332\u30FB\u7D10\u4ED8\u3051\u4E2D...');
   try {
-    await sheetAppend('&#22312;&#24235;!A:E', [[s.name, qty, price, date, store]]);
+    await sheetAppend('\u5728\u5EAB!A:E', [[s.name, qty, price, date, store]]);
     var profit = s.salePrice - Math.round(s.salePrice * 0.10) - s.shipping - price;
-    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [[s.name, price, profit]]);
+    await sheetUpdate('\u58F2\u4E0A!G' + s._row + ':I' + s._row, [[s.name, price, profit]]);
     salesData[idx].linked = true; salesData[idx].costPrice = price; salesData[idx].profit = profit;
-    hideSpinner(); showToast('&#20181;&#20837;&#12428;&#30331;&#37682;&#12375;&#12390;&#21033;&#30410;&#12434;&#35336;&#31639;&#12375;&#12414;&#12375;&#12383;&#65288;&#20181;&#20837; ' + fmt(price) + ' / &#21033;&#30410; ' + fmt(profit) + '&#65289;', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('\u4ED5\u5165\u308C\u767B\u9332\u3057\u3066\u5229\u76CA\u3092\u8A08\u7B97\u3057\u307E\u3057\u305F\uFF08\u4ED5\u5165 ' + fmt(price) + ' / \u5229\u76CA ' + fmt(profit) + '\uFF09', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('\u767B\u9332\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 // ===== MANUAL SALE =====
@@ -525,14 +525,14 @@ async function submitManualSale() {
   var ship  = parseInt(document.getElementById('man-ship').value) || 0;
   var plat  = document.getElementById('man-platform').value;
   var date  = document.getElementById('man-date').value;
-  if (!name || price <= 0) { showToast('&#21830;&#21697;&#21517;&#12392;&#36009;&#22770;&#20385;&#26684;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
-  showSpinner('&#30331;&#37682;&#20013;...');
+  if (!name || price <= 0) { showToast('\u5546\u54C1\u540D\u3068\u8CA9\u58F2\u4FA1\u683C\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044', 'warning'); return; }
+  showSpinner('\u767B\u9332\u4E2D...');
   try {
-    await sheetAppend('&#22770;&#19978;!A:I', [[Date.now().toString(), name, price, ship, plat, date, '', 0, 0]]);
-    hideSpinner(); showToast('&#22770;&#19978;&#12434;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', 'success');
+    await sheetAppend('\u58F2\u4E0A!A:I', [[Date.now().toString(), name, price, ship, plat, date, '', 0, 0]]);
+    hideSpinner(); showToast('\u58F2\u4E0A\u3092\u767B\u9332\u3057\u307E\u3057\u305F', 'success');
     document.getElementById('man-name').value = ''; document.getElementById('man-price').value = ''; document.getElementById('man-ship').value = '';
     refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('\u767B\u9332\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 // ===== MANUAL PURCHASE =====
@@ -548,16 +548,16 @@ async function submitManualPurchase() {
   var price = parseInt(document.getElementById('mp-price').value) || 0;
   var qty   = parseInt(document.getElementById('mp-qty').value) || 1;
   var date  = document.getElementById('mp-date').value;
-  var store = document.getElementById('mp-store').value.trim() || '&#25163;&#21205;&#30331;&#37682;';
-  if (!name) { showToast('&#21830;&#21697;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
-  if (price <= 0) { showToast('&#20181;&#20837;&#21336;&#20385;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
-  showSpinner('&#30331;&#37682;&#20013;...');
+  var store = document.getElementById('mp-store').value.trim() || '\u624B\u52D5\u767B\u9332';
+  if (!name) { showToast('\u5546\u54C1\u540D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044', 'warning'); return; }
+  if (price <= 0) { showToast('\u4ED5\u5165\u5358\u4FA1\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044', 'warning'); return; }
+  showSpinner('\u767B\u9332\u4E2D...');
   try {
-    await sheetAppend('&#22312;&#24235;!A:E', [[name, qty, price, date, store]]);
+    await sheetAppend('\u5728\u5EAB!A:E', [[name, qty, price, date, store]]);
     hideSpinner(); hideManualPurchaseModal();
-    showToast('&#20181;&#20837;&#12428;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;&#65288;' + name + ' &#215; ' + qty + '&#65289;', 'success');
+    showToast('\u4ED5\u5165\u308C\u767B\u9332\u3057\u307E\u3057\u305F\uFF08' + name + ' \u00D7 ' + qty + '\uFF09', 'success');
     if (document.getElementById('tab-inventory').classList.contains('active')) loadInventory();
-  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('\u767B\u9332\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 // ===== OCR =====
@@ -566,14 +566,14 @@ async function handleOcrFile(input) {
   var file = input.files[0];
   if (!file) return;
   input.value = '';
-  showSpinner('&#12524;&#12471;&#12540;&#12488;&#12434;&#35299;&#26512;&#20013;...\n(&#23569;&#12375;&#26178;&#38291;&#12364;&#12363;&#12363;&#12426;&#12414;&#12377;)');
+  showSpinner('\u30EC\u30B7\u30FC\u30C8\u3092\u89E3\u6790\u4E2D...\n(\u5C11\u3057\u6642\u9593\u304C\u304B\u304B\u308A\u307E\u3059)');
   try {
     var text = await ocrFile(file);
     hideSpinner();
     var parsed = parseReceiptText(text);
     parsed.rawText = text;
     openOcrModal(parsed);
-  } catch(e) { hideSpinner(); showToast('OCR&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('OCR\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 async function ocrFile(file) {
   var meta = JSON.stringify({ name: 'OCR_TMP_' + Date.now(), mimeType: 'application/vnd.google-apps.document' });
@@ -581,7 +581,7 @@ async function ocrFile(file) {
   form.append('metadata', new Blob([meta], { type: 'application/json' }));
   form.append('file', file);
   var res = await fetch(DRIVE_UPLOAD + '?uploadType=multipart&fields=id', { method:'POST', headers:{ 'Authorization':'Bearer ' + accessToken }, body:form });
-  if (!res.ok) throw new Error('Drive&#12450;&#12483;&#12503;&#12525;&#12540;&#12489;&#22833;&#25943;: ' + res.statusText);
+  if (!res.ok) throw new Error('Drive\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9\u5931\u6557: ' + res.statusText);
   var doc = await res.json();
   var textRes = await fetch(DRIVE_BASE + '/' + doc.id + '/export?mimeType=text/plain', { headers:{ 'Authorization':'Bearer ' + accessToken } });
   var text = textRes.ok ? await textRes.text() : '';
@@ -592,11 +592,11 @@ function parseReceiptText(text) {
   var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
   var storeName = lines[0] || '';
   var purchaseDate = new Date().toISOString().slice(0,10);
-  var dm = text.match(/(\d{4})[\/\-&#24180;](\d{1,2})[\/\-&#26376;](\d{1,2})/);
+  var dm = text.match(/(\d{4})[\/\-\u5E74](\d{1,2})[\/\-\u6708](\d{1,2})/);
   if (dm) purchaseDate = dm[1] + '-' + String(dm[2]).padStart(2,'0') + '-' + String(dm[3]).padStart(2,'0');
   var items = [];
   lines.forEach(function(line) {
-    var m = line.match(/^(.+?)\s+&#165;?\s*([\d,]+)\s*$/);
+    var m = line.match(/^(.+?)\s+\u00A5?\s*([\d,]+)\s*$/);
     if (m) { var price = parseInt(m[2].replace(/,/g,'')); if (price > 0 && price < 100000) items.push({ name:m[1].trim(), price:price, qty:1 }); }
   });
   return { storeName:storeName, purchaseDate:purchaseDate, items:items };
@@ -615,9 +615,9 @@ function addOcrItemRow(item) {
   var idx = _ocrItemCount++;
   document.getElementById('ocr-items-container').insertAdjacentHTML('beforeend',
     '<div class="ocr-item-row" id="ocr-row-' + idx + '"><div class="row g-1">'
-    + '<div class="col-12"><label>&#21830;&#21697;&#21517;</label><input type="text" class="form-control form-control-sm ocr-item-name" value="' + escHtml(item&&item.name||'') + '" placeholder="&#21830;&#21697;&#21517;"></div>'
-    + '<div class="col-6"><label>&#21336;&#20385; (&#20870;)</label><input type="number" class="form-control form-control-sm ocr-item-price" value="' + (item&&item.price||'') + '"></div>'
-    + '<div class="col-4"><label>&#25968;&#37327;</label><input type="number" class="form-control form-control-sm ocr-item-qty" value="' + (item&&item.qty||1) + '" min="1"></div>'
+    + '<div class="col-12"><label>\u5546\u54C1\u540D</label><input type="text" class="form-control form-control-sm ocr-item-name" value="' + escHtml(item&&item.name||'') + '" placeholder="\u5546\u54C1\u540D"></div>'
+    + '<div class="col-6"><label>\u5358\u4FA1 (\u5186)</label><input type="number" class="form-control form-control-sm ocr-item-price" value="' + (item&&item.price||'') + '"></div>'
+    + '<div class="col-4"><label>\u6570\u91CF</label><input type="number" class="form-control form-control-sm ocr-item-qty" value="' + (item&&item.qty||1) + '" min="1"></div>'
     + '<div class="col-2 d-flex align-items-end pb-1"><button class="btn btn-sm btn-outline-danger w-100" onclick="removeOcrRow(' + idx + ')"><i class="bi bi-trash3"></i></button></div>'
     + '</div></div>');
 }
@@ -632,22 +632,22 @@ async function confirmOCR() {
     var qty   = parseInt(row.querySelector('.ocr-item-qty').value) || 1;
     if (name) items.push([name, qty, price, date, storeName]);
   });
-  if (!items.length) { showToast('&#21830;&#21697;&#12364;1&#20214;&#12418;&#12354;&#12426;&#12414;&#12379;&#12435;', 'warning'); return; }
+  if (!items.length) { showToast('\u5546\u54C1\u304C1\u4EF6\u3082\u3042\u308A\u307E\u305B\u3093', 'warning'); return; }
   bootstrap.Modal.getInstance(document.getElementById('ocrModal')).hide();
-  showSpinner('&#22312;&#24235;&#12395;&#30331;&#37682;&#20013;...');
+  showSpinner('\u5728\u5EAB\u306B\u767B\u9332\u4E2D...');
   try {
-    await sheetAppend('&#22312;&#24235;!A:E', items);
-    hideSpinner(); showToast(items.length + '&#20214;&#12398;&#21830;&#21697;&#12434;&#22312;&#24235;&#12395;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', 'success'); refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+    await sheetAppend('\u5728\u5EAB!A:E', items);
+    hideSpinner(); showToast(items.length + '\u4EF6\u306E\u5546\u54C1\u3092\u5728\u5EAB\u306B\u767B\u9332\u3057\u307E\u3057\u305F', 'success'); refreshDashboard();
+  } catch(e) { hideSpinner(); showToast('\u767B\u9332\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 
 // ===== GMAIL =====
 async function scanGmail() {
-  showSpinner('Gmail&#12434;&#12473;&#12461;&#12515;&#12531;&#20013;...');
+  showSpinner('Gmail\u3092\u30B9\u30AD\u30E3\u30F3\u4E2D...');
   try {
-    var q = encodeURIComponent('subject:(&#36092;&#20837; OR &#27880;&#25991; OR &#12362;&#36023;&#12356;&#19978;&#12370; OR &#12362;&#21463;&#12369;&#21462;&#12426;) newer_than:30d');
+    var q = encodeURIComponent('subject:(\u8CFC\u5165 OR \u6CE8\u6587 OR \u304A\u8CB7\u3044\u4E0A\u3052 OR \u304A\u53D7\u3051\u53D6\u308A) newer_than:30d');
     var list = await api('GET', GMAIL_BASE + '/messages?q=' + q + '&maxResults=20');
-    if (!list || !list.messages || !list.messages.length) { hideSpinner(); showToast('&#35442;&#24403;&#12398;&#12513;&#12540;&#12523;&#12364;&#35211;&#12388;&#12363;&#12426;&#12414;&#12379;&#12435;&#12391;&#12375;&#12383;', 'info'); return; }
+    if (!list || !list.messages || !list.messages.length) { hideSpinner(); showToast('\u8A72\u5F53\u306E\u30E1\u30FC\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F', 'info'); return; }
     var saved = 0;
     for (var i = 0; i < Math.min(list.messages.length, 10); i++) {
       var msg = await api('GET', GMAIL_BASE + '/messages/' + list.messages[i].id + '?format=full');
@@ -655,17 +655,17 @@ async function scanGmail() {
       var parsed = parseGmail(msg);
       if (parsed) {
         var saleId = 'gmail_' + msg.id;
-        var rows = await sheetAll('&#22770;&#19978;');
+        var rows = await sheetAll('\u58F2\u4E0A');
         if (!rows.some(function(r){ return r[0] === saleId; })) {
-          await sheetAppend('&#22770;&#19978;!A:I', [[saleId, parsed.name, parsed.price, 0, parsed.platform, parsed.date, '', 0, 0]]);
+          await sheetAppend('\u58F2\u4E0A!A:I', [[saleId, parsed.name, parsed.price, 0, parsed.platform, parsed.date, '', 0, 0]]);
           saved++;
         }
       }
     }
     hideSpinner();
-    showToast(list.messages.length + '&#20214;&#30906;&#35469;&#12289;' + saved + '&#20214;&#12434;&#26032;&#35215;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', saved > 0 ? 'success' : 'info');
+    showToast(list.messages.length + '\u4EF6\u78BA\u8A8D\u3001' + saved + '\u4EF6\u3092\u65B0\u898F\u767B\u9332\u3057\u307E\u3057\u305F', saved > 0 ? 'success' : 'info');
     if (saved > 0) refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('Gmail&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('Gmail\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
 function parseGmail(msg) {
   var headers = {};
@@ -673,14 +673,14 @@ function parseGmail(msg) {
   var subject = headers['subject'] || '';
   var date = headers['date'] ? new Date(headers['date']).toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
   var body = getBody(msg.payload);
-  var platform = '&#12381;&#12398;&#20182;';
-  if (subject.includes('&#12513;&#12523;&#12459;&#12522;') || body.includes('mercari')) platform = '&#12513;&#12523;&#12459;&#12522;';
-  else if (subject.includes('&#27005;&#22825;') || body.includes('rakuten')) platform = '&#27005;&#22825;';
+  var platform = '\u305D\u306E\u4ED6';
+  if (subject.includes('\u30E1\u30EB\u30AB\u30EA') || body.includes('mercari')) platform = '\u30E1\u30EB\u30AB\u30EA';
+  else if (subject.includes('\u697D\u5929') || body.includes('rakuten')) platform = '\u697D\u5929';
   else if (/amazon/i.test(subject + body)) platform = 'Amazon';
-  else if (subject.includes('&#12516;&#12501;&#12458;&#12463;') || subject.includes('&#12501;&#12522;&#12510;')) platform = '&#12516;&#12501;&#12458;&#12463;';
-  var pm = body.match(/[&#165;&#65509;]\s*([\d,]+)/);
+  else if (subject.includes('\u30E4\u30D5\u30AA\u30AF') || subject.includes('\u30D5\u30EA\u30DE')) platform = '\u30E4\u30D5\u30AA\u30AF';
+  var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/);
   var price = pm ? parseInt(pm[1].replace(/,/g,'')) : 0;
-  var nm = subject.match(/[&#12300;&#12302;]([^&#12301;&#12303;]{2,30})[&#12301;&#12303;]/);
+  var nm = subject.match(/[\u300C\u300E]([^\u300D\u300F]{2,30})[\u300D\u300F]/);
   var name = nm ? nm[1] : subject.slice(0, 30);
   if (!name || price <= 0) return null;
   return { name:name, price:price, platform:platform, date:date };
@@ -698,11 +698,11 @@ function saveSettings() {
   localStorage.setItem('clientId', cfg.clientId);
   localStorage.setItem('spreadsheetId', cfg.spreadsheetId);
   updateSsLink();
-  showToast('&#35373;&#23450;&#12434;&#20445;&#23384;&#12375;&#12414;&#12375;&#12383;', 'success');
+  showToast('\u8A2D\u5B9A\u3092\u4FDD\u5B58\u3057\u307E\u3057\u305F', 'success');
 }
 
 // ===== UTILS =====
-function showSpinner(msg) { document.getElementById('spinner-msg').textContent = msg || '&#20966;&#29702;&#20013;...'; document.getElementById('spinner-overlay').classList.add('show'); }
+function showSpinner(msg) { document.getElementById('spinner-msg').textContent = msg || '\u51E6\u7406\u4E2D...'; document.getElementById('spinner-overlay').classList.add('show'); }
 function hideSpinner() { document.getElementById('spinner-overlay').classList.remove('show'); }
 function showToast(message, type) {
   type = type || 'success';
@@ -715,7 +715,7 @@ function showToast(message, type) {
   toast.show();
   el.addEventListener('hidden.bs.toast', function(){ el.remove(); });
 }
-function fmt(n) { return '&#165;' + Number(n).toLocaleString('ja-JP'); }
+function fmt(n) { return '\u00A5' + Number(n).toLocaleString('ja-JP'); }
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ===== AUTO SIGNIN =====
