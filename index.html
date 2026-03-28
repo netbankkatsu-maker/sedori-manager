@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>せどりレシートくん</title>
+  <title>&#12379;&#12393;&#12426;&#12524;&#12471;&#12540;&#12488;&#12367;&#12435;</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
@@ -59,179 +59,179 @@
 </head>
 <body>
 
-<!-- ログイン画面 -->
+<!-- &#12525;&#12464;&#12452;&#12531;&#30011;&#38754; -->
 <div id="login-screen">
   <div style="font-size:3rem;margin-bottom:16px">&#x1F9E2;</div>
-  <h2>せどりレシートくん</h2>
-  <p>Googleアカウントでログインしてください。<br>スプレッドシート・ドライブ・Gmailの権限が必要です。</p>
+  <h2>&#12379;&#12393;&#12426;&#12524;&#12471;&#12540;&#12488;&#12367;&#12435;</h2>
+  <p>Google&#12450;&#12459;&#12454;&#12531;&#12488;&#12391;&#12525;&#12464;&#12452;&#12531;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;<br>&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12539;&#12489;&#12521;&#12452;&#12502;&#12539;Gmail&#12398;&#27177;&#38480;&#12364;&#24517;&#35201;&#12391;&#12377;&#12290;</p>
   <div id="setup-screen" style="display:none;width:100%;margin-bottom:16px">
     <div class="settings-card">
-      <div class="fw-bold mb-2" style="font-size:.9rem">OAuth クライアントID</div>
+      <div class="fw-bold mb-2" style="font-size:.9rem">OAuth &#12463;&#12521;&#12452;&#12450;&#12531;&#12488;ID</div>
       <input id="setup-client-id" type="text" class="form-control mb-1" placeholder="xxxxx.apps.googleusercontent.com">
-      <div class="text-muted" style="font-size:.73rem">Google Cloud Console で取得した Client ID</div>
+      <div class="text-muted" style="font-size:.73rem">Google Cloud Console &#12391;&#21462;&#24471;&#12375;&#12383; Client ID</div>
     </div>
   </div>
   <button class="btn-google" onclick="handleSignIn()">
     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
-    Googleでサインイン
+    Google&#12391;&#12469;&#12452;&#12531;&#12452;&#12531;
   </button>
-  <button class="btn btn-link text-muted mt-3" style="font-size:.8rem" onclick="toggleSetup()">&#9881; Client IDを設定</button>
+  <button class="btn btn-link text-muted mt-3" style="font-size:.8rem" onclick="toggleSetup()">&#9881; Client ID&#12434;&#35373;&#23450;</button>
 </div>
 
-<!-- メインアプリ -->
+<!-- &#12513;&#12452;&#12531;&#12450;&#12503;&#12522; -->
 <div id="app" style="display:none">
 
 <header class="app-header d-flex justify-content-between align-items-center">
   <div>
-    <h1><i class="bi bi-receipt-cutoff me-1"></i>せどりレシートくん</h1>
+    <h1><i class="bi bi-receipt-cutoff me-1"></i>&#12379;&#12393;&#12426;&#12524;&#12471;&#12540;&#12488;&#12367;&#12435;</h1>
     <small id="header-date"></small>
   </div>
   <button onclick="handleSignOut()" style="background:rgba(255,255,255,.2);border:none;border-radius:20px;padding:6px 12px;color:#fff;font-size:.75rem">
-    <i class="bi bi-box-arrow-right me-1"></i>ログアウト
+    <i class="bi bi-box-arrow-right me-1"></i>&#12525;&#12464;&#12450;&#12454;&#12488;
   </button>
 </header>
 
 <div id="toast-container" class="toast-container"></div>
-<div id="spinner-overlay"><div class="spinner-border text-light" style="width:3rem;height:3rem"></div><p id="spinner-msg">処理中...</p></div>
+<div id="spinner-overlay"><div class="spinner-border text-light" style="width:3rem;height:3rem"></div><p id="spinner-msg">&#20966;&#29702;&#20013;...</p></div>
 
 <div class="container-fluid px-3 pt-3">
 
-  <!-- ダッシュボードタブ -->
+  <!-- &#12480;&#12483;&#12471;&#12517;&#12508;&#12540;&#12489;&#12479;&#12502; -->
   <div id="tab-dashboard" class="tab-pane active">
     <div class="row g-2 mb-3">
-      <div class="col-6"><div class="dash-card"><div class="label">今月売上</div><div class="value text-primary" id="kpi-sales">-</div></div></div>
-      <div class="col-6"><div class="dash-card"><div class="label">今月利益</div><div class="value" id="kpi-profit">-</div></div></div>
+      <div class="col-6"><div class="dash-card"><div class="label">&#20170;&#26376;&#22770;&#19978;</div><div class="value text-primary" id="kpi-sales">-</div></div></div>
+      <div class="col-6"><div class="dash-card"><div class="label">&#20170;&#26376;&#21033;&#30410;</div><div class="value" id="kpi-profit">-</div></div></div>
     </div>
-    <button class="btn-ocr mb-3" onclick="showOcrPicker()"><i class="bi bi-camera2 me-2"></i>レシートを解析する</button>
-    <button class="btn-gmail mb-3" onclick="scanGmail()"><i class="bi bi-envelope me-2"></i>Gmailをスキャン</button>
+    <button class="btn-ocr mb-3" onclick="showOcrPicker()"><i class="bi bi-camera2 me-2"></i>&#12524;&#12471;&#12540;&#12488;&#12434;&#35299;&#26512;&#12377;&#12427;</button>
+    <button class="btn-gmail mb-3" onclick="scanGmail()"><i class="bi bi-envelope me-2"></i>Gmail&#12434;&#12473;&#12461;&#12515;&#12531;</button>
   </div>
 
-  <!-- 在庫タブ -->
+  <!-- &#22312;&#24235;&#12479;&#12502; -->
   <div id="tab-inventory" class="tab-pane">
     <div class="d-flex align-items-center justify-content-between" style="margin:20px 0 8px">
-      <div class="section-title" style="margin:0"><i class="bi bi-boxes me-1"></i>在庫マスター</div>
+      <div class="section-title" style="margin:0"><i class="bi bi-boxes me-1"></i>&#22312;&#24235;&#12510;&#12473;&#12479;&#12540;</div>
       <button class="btn btn-sm btn-success" style="font-size:.78rem;border-radius:10px" onclick="showManualPurchaseModal()">
-        <i class="bi bi-box-seam me-1"></i>手動仕入れ登録
+        <i class="bi bi-box-seam me-1"></i>&#25163;&#21205;&#20181;&#20837;&#12428;&#30331;&#37682;
       </button>
     </div>
     <div class="inv-table">
       <table class="table table-hover mb-0">
-        <thead><tr><th>商品名</th><th class="text-center">数</th><th class="text-end">仕入単価</th><th class="text-center">状態</th><th></th></tr></thead>
-        <tbody id="inventory-tbody"><tr><td colspan="5" class="text-center text-muted py-4">読み込み中...</td></tr></tbody>
+        <thead><tr><th>&#21830;&#21697;&#21517;</th><th class="text-center">&#25968;</th><th class="text-end">&#20181;&#20837;&#21336;&#20385;</th><th class="text-center">&#29366;&#24907;</th><th></th></tr></thead>
+        <tbody id="inventory-tbody"><tr><td colspan="5" class="text-center text-muted py-4">&#35501;&#12415;&#36796;&#12415;&#20013;...</td></tr></tbody>
       </table>
     </div>
   </div>
 
-  <!-- 売上タブ -->
+  <!-- &#22770;&#19978;&#12479;&#12502; -->
   <div id="tab-sales" class="tab-pane">
-    <div class="section-title"><i class="bi bi-receipt me-1"></i>売上一覧</div>
-    <div id="sales-list"><div class="text-center text-muted py-4">読み込み中...</div></div>
+    <div class="section-title"><i class="bi bi-receipt me-1"></i>&#22770;&#19978;&#19968;&#35239;</div>
+    <div id="sales-list"><div class="text-center text-muted py-4">&#35501;&#12415;&#36796;&#12415;&#20013;...</div></div>
   </div>
 
-  <!-- 手動売上登録タブ -->
+  <!-- &#25163;&#21205;&#22770;&#19978;&#30331;&#37682;&#12479;&#12502; -->
   <div id="tab-add" class="tab-pane">
-    <div class="section-title"><i class="bi bi-plus-circle me-1"></i>手動売上登録</div>
+    <div class="section-title"><i class="bi bi-plus-circle me-1"></i>&#25163;&#21205;&#22770;&#19978;&#30331;&#37682;</div>
     <div class="settings-card mb-3">
-      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">商品名</label><input id="man-name" type="text" class="form-control" placeholder="商品名を入力"></div>
-      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">販売価格 (円)</label><input id="man-price" type="number" class="form-control" placeholder="例: 3200"></div>
-      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">送料 (円)</label><input id="man-ship" type="number" class="form-control" placeholder="例: 600"></div>
-      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">プラットフォーム</label>
-        <select id="man-platform" class="form-select"><option>メルカリ</option><option>ヤフオク</option><option>Amazon</option><option>楽天</option><option>その他</option></select></div>
-      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">売上日</label><input id="man-date" type="date" class="form-control"></div>
-      <button class="btn btn-primary w-100 py-3 fw-bold" onclick="submitManualSale()"><i class="bi bi-check2-circle me-1"></i>売上を登録</button>
+      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#21830;&#21697;&#21517;</label><input id="man-name" type="text" class="form-control" placeholder="&#21830;&#21697;&#21517;&#12434;&#20837;&#21147;"></div>
+      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#36009;&#22770;&#20385;&#26684; (&#20870;)</label><input id="man-price" type="number" class="form-control" placeholder="&#20363;: 3200"></div>
+      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#36865;&#26009; (&#20870;)</label><input id="man-ship" type="number" class="form-control" placeholder="&#20363;: 600"></div>
+      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#12503;&#12521;&#12483;&#12488;&#12501;&#12457;&#12540;&#12512;</label>
+        <select id="man-platform" class="form-select"><option>&#12513;&#12523;&#12459;&#12522;</option><option>&#12516;&#12501;&#12458;&#12463;</option><option>Amazon</option><option>&#27005;&#22825;</option><option>&#12381;&#12398;&#20182;</option></select></div>
+      <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#22770;&#19978;&#26085;</label><input id="man-date" type="date" class="form-control"></div>
+      <button class="btn btn-primary w-100 py-3 fw-bold" onclick="submitManualSale()"><i class="bi bi-check2-circle me-1"></i>&#22770;&#19978;&#12434;&#30331;&#37682;</button>
     </div>
   </div>
 
-  <!-- 設定タブ -->
+  <!-- &#35373;&#23450;&#12479;&#12502; -->
   <div id="tab-settings" class="tab-pane">
-    <div class="section-title"><i class="bi bi-gear me-1"></i>設定</div>
+    <div class="section-title"><i class="bi bi-gear me-1"></i>&#35373;&#23450;</div>
     <div class="settings-card mb-3">
-      <div class="fw-bold mb-2" style="font-size:.9rem"><i class="bi bi-table me-1"></i>スプレッドシート</div>
-      <input id="set-ss-id" type="text" class="form-control mb-2" placeholder="スプレッドシートID (空白で自動作成)">
-      <div class="text-muted mb-2" style="font-size:.73rem">Drive URLの /d/XXXXXX/ の部分</div>
-      <a id="ss-open-link" href="#" target="_blank" class="btn btn-outline-primary btn-sm w-100 mb-2" style="display:none"><i class="bi bi-box-arrow-up-right me-1"></i>スプレッドシートを開く</a>
+      <div class="fw-bold mb-2" style="font-size:.9rem"><i class="bi bi-table me-1"></i>&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;</div>
+      <input id="set-ss-id" type="text" class="form-control mb-2" placeholder="&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;ID (&#31354;&#30333;&#12391;&#33258;&#21205;&#20316;&#25104;)">
+      <div class="text-muted mb-2" style="font-size:.73rem">Drive URL&#12398; /d/XXXXXX/ &#12398;&#37096;&#20998;</div>
+      <a id="ss-open-link" href="#" target="_blank" class="btn btn-outline-primary btn-sm w-100 mb-2" style="display:none"><i class="bi bi-box-arrow-up-right me-1"></i>&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#38283;&#12367;</a>
     </div>
     <div class="settings-card mb-3">
-      <div class="fw-bold mb-2" style="font-size:.9rem"><i class="bi bi-key me-1"></i>OAuth クライアントID</div>
+      <div class="fw-bold mb-2" style="font-size:.9rem"><i class="bi bi-key me-1"></i>OAuth &#12463;&#12521;&#12452;&#12450;&#12531;&#12488;ID</div>
       <input id="set-client-id" type="text" class="form-control mb-2" placeholder="xxxxx.apps.googleusercontent.com">
     </div>
-    <button class="btn btn-primary w-100 fw-bold mb-3" onclick="saveSettings()"><i class="bi bi-save me-1"></i>設定を保存</button>
+    <button class="btn btn-primary w-100 fw-bold mb-3" onclick="saveSettings()"><i class="bi bi-save me-1"></i>&#35373;&#23450;&#12434;&#20445;&#23384;</button>
     <div class="settings-card mb-3">
-      <div class="fw-bold mb-2" style="font-size:.9rem">スプレッドシートを初期化</div>
-      <button class="btn btn-outline-warning w-100" onclick="initSpreadsheet()"><i class="bi bi-arrow-repeat me-1"></i>シートを作成/再作成</button>
-      <div class="text-muted mt-1" style="font-size:.73rem">初回起動時または修復時に実行</div>
+      <div class="fw-bold mb-2" style="font-size:.9rem">&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#21021;&#26399;&#21270;</div>
+      <button class="btn btn-outline-warning w-100" onclick="initSpreadsheet()"><i class="bi bi-arrow-repeat me-1"></i>&#12471;&#12540;&#12488;&#12434;&#20316;&#25104;/&#20877;&#20316;&#25104;</button>
+      <div class="text-muted mt-1" style="font-size:.73rem">&#21021;&#22238;&#36215;&#21205;&#26178;&#12414;&#12383;&#12399;&#20462;&#24489;&#26178;&#12395;&#23455;&#34892;</div>
     </div>
   </div>
 
 </div>
 
-<!-- ボトムナビ -->
+<!-- &#12508;&#12488;&#12512;&#12490;&#12499; -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" id="nav-dashboard" onclick="switchTab('dashboard')"><i class="bi bi-speedometer2"></i>ホーム</button>
-  <button class="nav-btn" id="nav-inventory" onclick="switchTab('inventory')"><i class="bi bi-boxes"></i>在庫</button>
-  <button class="nav-btn" id="nav-sales" onclick="switchTab('sales')"><i class="bi bi-receipt"></i>売上</button>
-  <button class="nav-btn" id="nav-add" onclick="switchTab('add')"><i class="bi bi-plus-circle-fill"></i>売上登録</button>
-  <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')"><i class="bi bi-gear-fill"></i>設定</button>
+  <button class="nav-btn active" id="nav-dashboard" onclick="switchTab('dashboard')"><i class="bi bi-speedometer2"></i>&#12507;&#12540;&#12512;</button>
+  <button class="nav-btn" id="nav-inventory" onclick="switchTab('inventory')"><i class="bi bi-boxes"></i>&#22312;&#24235;</button>
+  <button class="nav-btn" id="nav-sales" onclick="switchTab('sales')"><i class="bi bi-receipt"></i>&#22770;&#19978;</button>
+  <button class="nav-btn" id="nav-add" onclick="switchTab('add')"><i class="bi bi-plus-circle-fill"></i>&#22770;&#19978;&#30331;&#37682;</button>
+  <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')"><i class="bi bi-gear-fill"></i>&#35373;&#23450;</button>
 </nav>
 
-<!-- OCR確認モーダル -->
+<!-- OCR&#30906;&#35469;&#12514;&#12540;&#12480;&#12523; -->
 <div class="modal fade" id="ocrModal" tabindex="-1" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title"><i class="bi bi-camera2 me-1"></i>OCR解析結果</h5>
+        <h5 class="modal-title"><i class="bi bi-camera2 me-1"></i>OCR&#35299;&#26512;&#32080;&#26524;</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <div class="row g-2 mb-3">
-          <div class="col-7"><label class="form-label fw-bold" style="font-size:.8rem">店舗名</label><input id="ocr-store" type="text" class="form-control form-control-sm"></div>
-          <div class="col-5"><label class="form-label fw-bold" style="font-size:.8rem">購入日</label><input id="ocr-date" type="date" class="form-control form-control-sm"></div>
+          <div class="col-7"><label class="form-label fw-bold" style="font-size:.8rem">&#24215;&#33303;&#21517;</label><input id="ocr-store" type="text" class="form-control form-control-sm"></div>
+          <div class="col-5"><label class="form-label fw-bold" style="font-size:.8rem">&#36092;&#20837;&#26085;</label><input id="ocr-date" type="date" class="form-control form-control-sm"></div>
         </div>
-        <div class="mb-2 fw-bold" style="font-size:.85rem">商品一覧（修正可）</div>
+        <div class="mb-2 fw-bold" style="font-size:.85rem">&#21830;&#21697;&#19968;&#35239;&#65288;&#20462;&#27491;&#21487;&#65289;</div>
         <div id="ocr-items-container"></div>
-        <button class="btn btn-outline-secondary btn-sm w-100 mt-2" onclick="addOcrItemRow()"><i class="bi bi-plus me-1"></i>商品を追加</button>
+        <button class="btn btn-outline-secondary btn-sm w-100 mt-2" onclick="addOcrItemRow()"><i class="bi bi-plus me-1"></i>&#21830;&#21697;&#12434;&#36861;&#21152;</button>
       </div>
       <div class="modal-footer flex-column gap-2">
         <details style="width:100%">
-          <summary style="font-size:.75rem;color:#999;cursor:pointer">OCR生テキストを確認</summary>
+          <summary style="font-size:.75rem;color:#999;cursor:pointer">OCR&#29983;&#12486;&#12461;&#12473;&#12488;&#12434;&#30906;&#35469;</summary>
           <pre id="ocr-raw-text" style="font-size:.65rem;max-height:150px;overflow-y:auto;white-space:pre-wrap;background:#f5f5f5;padding:8px;border-radius:6px;margin-top:4px"></pre>
         </details>
-        <button class="btn btn-primary w-100 fw-bold py-2" onclick="confirmOCR()"><i class="bi bi-check2-all me-1"></i>確定して在庫に登録</button>
-        <button class="btn btn-outline-secondary w-100" data-bs-dismiss="modal">キャンセル</button>
+        <button class="btn btn-primary w-100 fw-bold py-2" onclick="confirmOCR()"><i class="bi bi-check2-all me-1"></i>&#30906;&#23450;&#12375;&#12390;&#22312;&#24235;&#12395;&#30331;&#37682;</button>
+        <button class="btn btn-outline-secondary w-100" data-bs-dismiss="modal">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 手動仕入れ登録モーダル -->
+<!-- &#25163;&#21205;&#20181;&#20837;&#12428;&#30331;&#37682;&#12514;&#12540;&#12480;&#12523; -->
 <div id="manual-purchase-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.5);overflow-y:auto">
   <div style="background:#fff;border-radius:16px;margin:40px 16px;padding:20px">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <strong><i class="bi bi-box-seam me-1"></i>手動仕入れ登録</strong>
+      <strong><i class="bi bi-box-seam me-1"></i>&#25163;&#21205;&#20181;&#20837;&#12428;&#30331;&#37682;</strong>
       <button onclick="hideManualPurchaseModal()" style="background:none;border:none;font-size:1.4rem;color:#999">&times;</button>
     </div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">商品名</label><input id="mp-name" type="text" class="form-control" placeholder="商品名"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">仕入単価 (円)</label><input id="mp-price" type="number" class="form-control" placeholder="例: 1200"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">数量</label><input id="mp-qty" type="number" class="form-control" value="1" min="1"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">仕入日</label><input id="mp-date" type="date" class="form-control"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">店舗名</label><input id="mp-store" type="text" class="form-control" placeholder="例: ドンキホーテ"></div>
-    <button class="btn w-100 py-2 fw-bold" style="background:var(--success);color:#fff;border-radius:12px" onclick="submitManualPurchase()"><i class="bi bi-check-circle me-1"></i>登録</button>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#21830;&#21697;&#21517;</label><input id="mp-name" type="text" class="form-control" placeholder="&#21830;&#21697;&#21517;"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#20181;&#20837;&#21336;&#20385; (&#20870;)</label><input id="mp-price" type="number" class="form-control" placeholder="&#20363;: 1200"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#25968;&#37327;</label><input id="mp-qty" type="number" class="form-control" value="1" min="1"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#20181;&#20837;&#26085;</label><input id="mp-date" type="date" class="form-control"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#24215;&#33303;&#21517;</label><input id="mp-store" type="text" class="form-control" placeholder="&#20363;: &#12489;&#12531;&#12461;&#12507;&#12540;&#12486;"></div>
+    <button class="btn w-100 py-2 fw-bold" style="background:var(--success);color:#fff;border-radius:12px" onclick="submitManualPurchase()"><i class="bi bi-check-circle me-1"></i>&#30331;&#37682;</button>
   </div>
 </div>
 
-<!-- 売上への仕入れ登録モーダル -->
+<!-- &#22770;&#19978;&#12408;&#12398;&#20181;&#20837;&#12428;&#30331;&#37682;&#12514;&#12540;&#12480;&#12523; -->
 <div id="sale-purchase-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.5);overflow-y:auto">
   <div style="background:#fff;border-radius:16px;margin:40px 16px;padding:20px">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <strong><i class="bi bi-box-seam me-1"></i>仕入れ登録 &amp; 紐付け</strong>
+      <strong><i class="bi bi-box-seam me-1"></i>&#20181;&#20837;&#12428;&#30331;&#37682; &amp; &#32016;&#20184;&#12369;</strong>
       <button onclick="closeSalePurchaseModal()" style="background:none;border:none;font-size:1.4rem;color:#999">&times;</button>
     </div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">商品名</label><input id="sp-name" type="text" class="form-control" readonly style="background:#f5f5f5"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">仕入単価 (円)</label><input id="sp-price" type="number" class="form-control" placeholder="例: 1200"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">数量</label><input id="sp-qty" type="number" class="form-control" value="1" min="1"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">仕入日</label><input id="sp-date" type="date" class="form-control"></div>
-    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">店舗名</label><input id="sp-store" type="text" class="form-control" placeholder="例: ドンキホーテ"></div>
-    <button class="btn w-100 py-2 fw-bold" style="background:var(--success);color:#fff;border-radius:12px" onclick="submitSalePurchase()"><i class="bi bi-check-circle me-1"></i>登録して利益を計算</button>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#21830;&#21697;&#21517;</label><input id="sp-name" type="text" class="form-control" readonly style="background:#f5f5f5"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#20181;&#20837;&#21336;&#20385; (&#20870;)</label><input id="sp-price" type="number" class="form-control" placeholder="&#20363;: 1200"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#25968;&#37327;</label><input id="sp-qty" type="number" class="form-control" value="1" min="1"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#20181;&#20837;&#26085;</label><input id="sp-date" type="date" class="form-control"></div>
+    <div class="mb-3"><label class="form-label fw-bold" style="font-size:.85rem">&#24215;&#33303;&#21517;</label><input id="sp-store" type="text" class="form-control" placeholder="&#20363;: &#12489;&#12531;&#12461;&#12507;&#12540;&#12486;"></div>
+    <button class="btn w-100 py-2 fw-bold" style="background:var(--success);color:#fff;border-radius:12px" onclick="submitSalePurchase()"><i class="bi bi-check-circle me-1"></i>&#30331;&#37682;&#12375;&#12390;&#21033;&#30410;&#12434;&#35336;&#31639;</button>
   </div>
 </div>
 
@@ -271,7 +271,7 @@ function handleSignIn() {
   var inp = document.getElementById('setup-client-id').value.trim();
   if (inp) { cfg.clientId = inp; localStorage.setItem('clientId', inp); }
   if (!cfg.clientId) {
-    alert('Client IDを設定から入力してください。');
+    alert('Client ID&#12434;&#35373;&#23450;&#12363;&#12425;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;');
     document.getElementById('setup-screen').style.display = 'block';
     return;
   }
@@ -284,7 +284,7 @@ function initTokenClient() {
     client_id: cfg.clientId,
     scope: SCOPES,
     callback: function(resp) {
-      if (resp.error) { showToast('OAuthエラー: ' + resp.error, 'danger'); return; }
+      if (resp.error) { showToast('OAuth&#12456;&#12521;&#12540;: ' + resp.error, 'danger'); return; }
       accessToken = resp.access_token;
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -317,24 +317,24 @@ async function sheetAll(sheet) { return sheetGet(sheet + '!A2:Z'); }
 
 // ===== SPREADSHEET SETUP =====
 async function initSpreadsheet() {
-  showSpinner('スプレッドシートを準備中...');
+  showSpinner('&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#28310;&#20633;&#20013;...');
   try {
     if (!cfg.spreadsheetId) {
       var ss = await api('POST', SHEETS_BASE, {
-        properties: { title: 'せどりレシートくん' },
-        sheets: [{ properties: { title: '在庫', sheetId: 0 } }, { properties: { title: '売上', sheetId: 1 } }, { properties: { title: 'レシート', sheetId: 2 } }]
+        properties: { title: '&#12379;&#12393;&#12426;&#12524;&#12471;&#12540;&#12488;&#12367;&#12435;' },
+        sheets: [{ properties: { title: '&#22312;&#24235;', sheetId: 0 } }, { properties: { title: '&#22770;&#19978;', sheetId: 1 } }, { properties: { title: '&#12524;&#12471;&#12540;&#12488;', sheetId: 2 } }]
       });
       cfg.spreadsheetId = ss.spreadsheetId;
       localStorage.setItem('spreadsheetId', cfg.spreadsheetId);
       document.getElementById('set-ss-id').value = cfg.spreadsheetId;
     }
-    await sheetUpdate('在庫!A1:E1', [['商品名', '数量', '仕入単価', '仕入日', '店舗名']]);
-    await sheetUpdate('売上!A1:I1', [['ID', '商品名', '販売価格', '送料', 'プラットフォーム', '日付', '紐付商品', '仕入単価', '利益']]);
-    await sheetUpdate('レシート!A1', [['ハッシュ']]);
+    await sheetUpdate('&#22312;&#24235;!A1:E1', [['&#21830;&#21697;&#21517;', '&#25968;&#37327;', '&#20181;&#20837;&#21336;&#20385;', '&#20181;&#20837;&#26085;', '&#24215;&#33303;&#21517;']]);
+    await sheetUpdate('&#22770;&#19978;!A1:I1', [['ID', '&#21830;&#21697;&#21517;', '&#36009;&#22770;&#20385;&#26684;', '&#36865;&#26009;', '&#12503;&#12521;&#12483;&#12488;&#12501;&#12457;&#12540;&#12512;', '&#26085;&#20184;', '&#32016;&#20184;&#21830;&#21697;', '&#20181;&#20837;&#21336;&#20385;', '&#21033;&#30410;']]);
+    await sheetUpdate('&#12524;&#12471;&#12540;&#12488;!A1', [['&#12495;&#12483;&#12471;&#12517;']]);
     updateSsLink();
     hideSpinner();
-    showToast('シートの準備完了！', 'success');
-  } catch(e) { hideSpinner(); showToast('エラー: ' + e.message, 'danger'); }
+    showToast('&#12471;&#12540;&#12488;&#12398;&#28310;&#20633;&#23436;&#20102;&#65281;', 'success');
+  } catch(e) { hideSpinner(); showToast('&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 function updateSsLink() {
@@ -347,12 +347,12 @@ function updateSsLink() {
 // ===== INIT =====
 async function onSignedIn() {
   var d = new Date();
-  document.getElementById('header-date').textContent = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+  document.getElementById('header-date').textContent = d.getFullYear() + '&#24180;' + (d.getMonth()+1) + '&#26376;' + d.getDate() + '&#26085;';
   document.getElementById('set-client-id').value = cfg.clientId;
   document.getElementById('set-ss-id').value = cfg.spreadsheetId;
   updateSsLink();
   if (!cfg.spreadsheetId) {
-    showToast('設定タブからスプレッドシートを作成してください', 'info');
+    showToast('&#35373;&#23450;&#12479;&#12502;&#12363;&#12425;&#12473;&#12503;&#12524;&#12483;&#12489;&#12471;&#12540;&#12488;&#12434;&#20316;&#25104;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'info');
     switchTab('settings');
     return;
   }
@@ -375,7 +375,7 @@ function switchTab(tab) {
 async function refreshDashboard() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('売上');
+    var rows = await sheetAll('&#22770;&#19978;');
     var ym = new Date().toISOString().slice(0,7);
     var sales = 0, profit = 0;
     rows.forEach(function(r) { if ((r[5]||'').startsWith(ym)) { sales += Number(r[2])||0; profit += Number(r[8])||0; } });
@@ -390,18 +390,18 @@ async function refreshDashboard() {
 async function loadInventory() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('在庫');
+    var rows = await sheetAll('&#22312;&#24235;');
     inventoryData = rows.map(function(r){ return { name:r[0]||'', qty:Number(r[1])||0, costPrice:Number(r[2])||0, purchaseDate:r[3]||'', storeName:r[4]||'' }; }).filter(function(i){ return i.name; });
     invNames = inventoryData.map(function(i){ return i.name; });
     renderInventory();
-  } catch(e) { showToast('在庫取得エラー: ' + e.message, 'danger'); }
+  } catch(e) { showToast('&#22312;&#24235;&#21462;&#24471;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 function renderInventory() {
   var tbody = document.getElementById('inventory-tbody');
-  if (!inventoryData.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">在庫データがありません</td></tr>'; return; }
+  if (!inventoryData.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">&#22312;&#24235;&#12487;&#12540;&#12479;&#12364;&#12354;&#12426;&#12414;&#12379;&#12435;</td></tr>'; return; }
   tbody.innerHTML = inventoryData.map(function(i, idx) {
-    var s = i.qty <= 0 ? '<span class="badge-ng">在庫切れ</span>' : i.qty <= 1 ? '<span class="badge-warn">残りわずか</span>' : '<span class="badge-ok">在庫あり</span>';
+    var s = i.qty <= 0 ? '<span class="badge-ng">&#22312;&#24235;&#20999;&#12428;</span>' : i.qty <= 1 ? '<span class="badge-warn">&#27531;&#12426;&#12431;&#12378;&#12363;</span>' : '<span class="badge-ok">&#22312;&#24235;&#12354;&#12426;</span>';
     return '<tr id="inv-row-' + idx + '" data-idx="' + idx + '"><td class="inv-name">' + escHtml(i.name) + '</td><td class="text-center fw-bold inv-qty">' + i.qty + '</td><td class="text-end inv-cost">' + fmt(i.costPrice) + '</td><td class="text-center">' + s + '</td><td class="text-center"><button class="inv-edit-btn" onclick="invStartEdit(' + idx + ')"><i class="bi bi-pencil"></i></button></td></tr>';
   }).join('');
 }
@@ -415,7 +415,7 @@ function invStartEdit(idx) {
   tr.querySelector('.inv-qty').innerHTML   = '<input type="number" value="' + i.qty + '" style="width:4em">';
   tr.querySelector('.inv-cost').innerHTML  = '<input type="number" value="' + i.costPrice + '" style="width:5em">';
   tr.cells[3].innerHTML = '';
-  tr.cells[4].innerHTML = '<button class="inv-save-btn" onclick="invSaveEdit(' + idx + ')">保存</button><button class="inv-cancel-btn" onclick="invCancelEdit(' + idx + ')">×</button>';
+  tr.cells[4].innerHTML = '<button class="inv-save-btn" onclick="invSaveEdit(' + idx + ')">&#20445;&#23384;</button><button class="inv-cancel-btn" onclick="invCancelEdit(' + idx + ')">&#215;</button>';
 }
 function invCancelEdit(idx) { delete document.getElementById('inv-row-'+idx).dataset.editing; loadInventory(); }
 async function invSaveEdit(idx) {
@@ -423,46 +423,46 @@ async function invSaveEdit(idx) {
   var name = tr.querySelector('.inv-name input').value.trim();
   var qty  = parseInt(tr.querySelector('.inv-qty input').value) || 0;
   var cost = parseInt(tr.querySelector('.inv-cost input').value) || 0;
-  if (!name) { showToast('商品名を入力してください', 'warning'); return; }
-  showSpinner('更新中...');
+  if (!name) { showToast('&#21830;&#21697;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
+  showSpinner('&#26356;&#26032;&#20013;...');
   try {
     var row = idx + 2;
     var old = inventoryData[idx];
-    await sheetUpdate('在庫!A' + row + ':E' + row, [[name, qty, cost, old.purchaseDate, old.storeName]]);
-    hideSpinner(); showToast('更新しました', 'success'); loadInventory();
-  } catch(e) { hideSpinner(); showToast('更新エラー: ' + e.message, 'danger'); }
+    await sheetUpdate('&#22312;&#24235;!A' + row + ':E' + row, [[name, qty, cost, old.purchaseDate, old.storeName]]);
+    hideSpinner(); showToast('&#26356;&#26032;&#12375;&#12414;&#12375;&#12383;', 'success'); loadInventory();
+  } catch(e) { hideSpinner(); showToast('&#26356;&#26032;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 // ===== SALES =====
 async function loadSales() {
   if (!cfg.spreadsheetId) return;
   try {
-    var rows = await sheetAll('売上');
+    var rows = await sheetAll('&#22770;&#19978;');
     salesData = rows.map(function(r, i) {
       return { _row:i+2, saleId:r[0]||'', name:r[1]||'', salePrice:Number(r[2])||0, shipping:Number(r[3])||0, platform:r[4]||'', date:r[5]||'', linkedInvName:r[6]||'', costPrice:Number(r[7])||0, profit:Number(r[8])||0, linked:!!(r[6]&&r[6].trim()) };
     }).filter(function(s){ return s.name; }).reverse();
-    if (!invNames.length) { var ir = await sheetAll('在庫'); invNames = ir.map(function(r){ return r[0]; }).filter(Boolean); }
+    if (!invNames.length) { var ir = await sheetAll('&#22312;&#24235;'); invNames = ir.map(function(r){ return r[0]; }).filter(Boolean); }
     renderSalesList();
-  } catch(e) { showToast('売上取得エラー: ' + e.message, 'danger'); }
+  } catch(e) { showToast('&#22770;&#19978;&#21462;&#24471;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 function renderSalesList() {
   var el = document.getElementById('sales-list');
-  if (!salesData.length) { el.innerHTML = '<div class="text-center text-muted py-4" style="font-size:.83rem">売上データがありません</div>'; return; }
+  if (!salesData.length) { el.innerHTML = '<div class="text-center text-muted py-4" style="font-size:.83rem">&#22770;&#19978;&#12487;&#12540;&#12479;&#12364;&#12354;&#12426;&#12414;&#12379;&#12435;</div>'; return; }
   el.innerHTML = '<div class="sales-card">' + salesData.map(function(s,i){ return renderSaleRow(s,i); }).join('') + '</div>';
 }
 
 function renderSaleRow(s, idx) {
-  var profitHtml = s.linked ? '<div class="mt-1"><span class="' + (s.profit>=0?'sale-profit-pos':'sale-profit-neg') + '">利益 ' + fmt(s.profit) + '</span> <span style="color:#aaa;font-size:.72rem">仕入 ' + fmt(s.costPrice) + '</span></div>' : '';
-  var badge = s.linked ? '<span class="badge-linked"><i class="bi bi-link-45deg"></i>紐付済</span>' : '<span class="badge-unlinked">未紐付け</span>';
+  var profitHtml = s.linked ? '<div class="mt-1"><span class="' + (s.profit>=0?'sale-profit-pos':'sale-profit-neg') + '">&#21033;&#30410; ' + fmt(s.profit) + '</span> <span style="color:#aaa;font-size:.72rem">&#20181;&#20837; ' + fmt(s.costPrice) + '</span></div>' : '';
+  var badge = s.linked ? '<span class="badge-linked"><i class="bi bi-link-45deg"></i>&#32016;&#20184;&#28168;</span>' : '<span class="badge-unlinked">&#26410;&#32016;&#20184;&#12369;</span>';
   var linkHtml = '';
   if (!s.linked) {
-    var opts = '<option value="">— 在庫から選択 —</option>' + invNames.map(function(n){ return '<option value="' + escHtml(n).replace(/"/g,'&quot;') + '">' + escHtml(n) + '</option>'; }).join('');
+    var opts = '<option value="">&#8212; &#22312;&#24235;&#12363;&#12425;&#36984;&#25246; &#8212;</option>' + invNames.map(function(n){ return '<option value="' + escHtml(n).replace(/"/g,'&quot;') + '">' + escHtml(n) + '</option>'; }).join('');
     linkHtml = '<select class="sale-action-btn" style="width:auto;font-size:.72rem" onchange="linkSaleSelect(' + idx + ',this)">' + opts + '</select>'
-      + '<button class="sale-action-btn ms-1" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:.72rem" onclick="openSalePurchaseModal(' + idx + ')"><i class="bi bi-box-seam me-1"></i>仕入れ登録</button>';
+      + '<button class="sale-action-btn ms-1" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:.72rem" onclick="openSalePurchaseModal(' + idx + ')"><i class="bi bi-box-seam me-1"></i>&#20181;&#20837;&#12428;&#30331;&#37682;</button>';
   }
-  var unlinkHtml = s.linked ? '<button onclick="unlinkSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer"><i class="bi bi-scissors me-1"></i>紐付け解除</button>' : '';
-  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' ・ ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + '</div></div>';
+  var unlinkHtml = s.linked ? '<button onclick="unlinkSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer"><i class="bi bi-scissors me-1"></i>&#32016;&#20184;&#12369;&#35299;&#38500;</button>' : '';
+  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' &#12539; ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + '</div></div>';
 }
 
 async function linkSaleSelect(idx, sel) { if (sel.value) await linkSale(idx, sel.value); }
@@ -471,21 +471,21 @@ async function linkSale(idx, invName) {
   var inv = inventoryData.find(function(i){ return i.name === invName; });
   var cost = inv ? inv.costPrice : 0;
   var profit = s.salePrice - Math.round(s.salePrice * 0.10) - s.shipping - cost;
-  showSpinner('紐付け中...');
+  showSpinner('&#32016;&#20184;&#12369;&#20013;...');
   try {
-    await sheetUpdate('売上!G' + s._row + ':I' + s._row, [[invName, cost, profit]]);
+    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [[invName, cost, profit]]);
     salesData[idx].linked = true; salesData[idx].linkedInvName = invName; salesData[idx].costPrice = cost; salesData[idx].profit = profit;
-    hideSpinner(); showToast('紐付けしました', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('紐付けエラー: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12375;&#12414;&#12375;&#12383;', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 async function unlinkSale(idx) {
   var s = salesData[idx];
-  showSpinner('解除中...');
+  showSpinner('&#35299;&#38500;&#20013;...');
   try {
-    await sheetUpdate('売上!G' + s._row + ':I' + s._row, [['', 0, 0]]);
+    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [['', 0, 0]]);
     salesData[idx].linked = false; salesData[idx].linkedInvName = ''; salesData[idx].costPrice = 0; salesData[idx].profit = 0;
-    hideSpinner(); showToast('紐付けを解除しました', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('解除エラー: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('&#32016;&#20184;&#12369;&#12434;&#35299;&#38500;&#12375;&#12414;&#12375;&#12383;', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('&#35299;&#38500;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 function openSalePurchaseModal(idx) {
   _salePurchaseIdx = idx;
@@ -505,17 +505,17 @@ async function submitSalePurchase() {
   var price = parseInt(document.getElementById('sp-price').value) || 0;
   var qty   = parseInt(document.getElementById('sp-qty').value) || 1;
   var date  = document.getElementById('sp-date').value;
-  var store = document.getElementById('sp-store').value.trim() || '手動登録';
-  if (price <= 0) { showToast('仕入単価を入力してください', 'warning'); return; }
+  var store = document.getElementById('sp-store').value.trim() || '&#25163;&#21205;&#30331;&#37682;';
+  if (price <= 0) { showToast('&#20181;&#20837;&#21336;&#20385;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
   closeSalePurchaseModal();
-  showSpinner('仕入れ登録・紐付け中...');
+  showSpinner('&#20181;&#20837;&#12428;&#30331;&#37682;&#12539;&#32016;&#20184;&#12369;&#20013;...');
   try {
-    await sheetAppend('在庫!A:E', [[s.name, qty, price, date, store]]);
+    await sheetAppend('&#22312;&#24235;!A:E', [[s.name, qty, price, date, store]]);
     var profit = s.salePrice - Math.round(s.salePrice * 0.10) - s.shipping - price;
-    await sheetUpdate('売上!G' + s._row + ':I' + s._row, [[s.name, price, profit]]);
+    await sheetUpdate('&#22770;&#19978;!G' + s._row + ':I' + s._row, [[s.name, price, profit]]);
     salesData[idx].linked = true; salesData[idx].costPrice = price; salesData[idx].profit = profit;
-    hideSpinner(); showToast('仕入れ登録して利益を計算しました（仕入 ' + fmt(price) + ' / 利益 ' + fmt(profit) + '）', 'success'); renderSalesList();
-  } catch(e) { hideSpinner(); showToast('登録エラー: ' + e.message, 'danger'); }
+    hideSpinner(); showToast('&#20181;&#20837;&#12428;&#30331;&#37682;&#12375;&#12390;&#21033;&#30410;&#12434;&#35336;&#31639;&#12375;&#12414;&#12375;&#12383;&#65288;&#20181;&#20837; ' + fmt(price) + ' / &#21033;&#30410; ' + fmt(profit) + '&#65289;', 'success'); renderSalesList();
+  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 // ===== MANUAL SALE =====
@@ -525,14 +525,14 @@ async function submitManualSale() {
   var ship  = parseInt(document.getElementById('man-ship').value) || 0;
   var plat  = document.getElementById('man-platform').value;
   var date  = document.getElementById('man-date').value;
-  if (!name || price <= 0) { showToast('商品名と販売価格を入力してください', 'warning'); return; }
-  showSpinner('登録中...');
+  if (!name || price <= 0) { showToast('&#21830;&#21697;&#21517;&#12392;&#36009;&#22770;&#20385;&#26684;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
+  showSpinner('&#30331;&#37682;&#20013;...');
   try {
-    await sheetAppend('売上!A:I', [[Date.now().toString(), name, price, ship, plat, date, '', 0, 0]]);
-    hideSpinner(); showToast('売上を登録しました', 'success');
+    await sheetAppend('&#22770;&#19978;!A:I', [[Date.now().toString(), name, price, ship, plat, date, '', 0, 0]]);
+    hideSpinner(); showToast('&#22770;&#19978;&#12434;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', 'success');
     document.getElementById('man-name').value = ''; document.getElementById('man-price').value = ''; document.getElementById('man-ship').value = '';
     refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('登録エラー: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 // ===== MANUAL PURCHASE =====
@@ -548,16 +548,16 @@ async function submitManualPurchase() {
   var price = parseInt(document.getElementById('mp-price').value) || 0;
   var qty   = parseInt(document.getElementById('mp-qty').value) || 1;
   var date  = document.getElementById('mp-date').value;
-  var store = document.getElementById('mp-store').value.trim() || '手動登録';
-  if (!name) { showToast('商品名を入力してください', 'warning'); return; }
-  if (price <= 0) { showToast('仕入単価を入力してください', 'warning'); return; }
-  showSpinner('登録中...');
+  var store = document.getElementById('mp-store').value.trim() || '&#25163;&#21205;&#30331;&#37682;';
+  if (!name) { showToast('&#21830;&#21697;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
+  if (price <= 0) { showToast('&#20181;&#20837;&#21336;&#20385;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;', 'warning'); return; }
+  showSpinner('&#30331;&#37682;&#20013;...');
   try {
-    await sheetAppend('在庫!A:E', [[name, qty, price, date, store]]);
+    await sheetAppend('&#22312;&#24235;!A:E', [[name, qty, price, date, store]]);
     hideSpinner(); hideManualPurchaseModal();
-    showToast('仕入れ登録しました（' + name + ' × ' + qty + '）', 'success');
+    showToast('&#20181;&#20837;&#12428;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;&#65288;' + name + ' &#215; ' + qty + '&#65289;', 'success');
     if (document.getElementById('tab-inventory').classList.contains('active')) loadInventory();
-  } catch(e) { hideSpinner(); showToast('登録エラー: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 // ===== OCR =====
@@ -566,14 +566,14 @@ async function handleOcrFile(input) {
   var file = input.files[0];
   if (!file) return;
   input.value = '';
-  showSpinner('レシートを解析中...\n(少し時間がかかります)');
+  showSpinner('&#12524;&#12471;&#12540;&#12488;&#12434;&#35299;&#26512;&#20013;...\n(&#23569;&#12375;&#26178;&#38291;&#12364;&#12363;&#12363;&#12426;&#12414;&#12377;)');
   try {
     var text = await ocrFile(file);
     hideSpinner();
     var parsed = parseReceiptText(text);
     parsed.rawText = text;
     openOcrModal(parsed);
-  } catch(e) { hideSpinner(); showToast('OCRエラー: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('OCR&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 async function ocrFile(file) {
   var meta = JSON.stringify({ name: 'OCR_TMP_' + Date.now(), mimeType: 'application/vnd.google-apps.document' });
@@ -581,7 +581,7 @@ async function ocrFile(file) {
   form.append('metadata', new Blob([meta], { type: 'application/json' }));
   form.append('file', file);
   var res = await fetch(DRIVE_UPLOAD + '?uploadType=multipart&fields=id', { method:'POST', headers:{ 'Authorization':'Bearer ' + accessToken }, body:form });
-  if (!res.ok) throw new Error('Driveアップロード失敗: ' + res.statusText);
+  if (!res.ok) throw new Error('Drive&#12450;&#12483;&#12503;&#12525;&#12540;&#12489;&#22833;&#25943;: ' + res.statusText);
   var doc = await res.json();
   var textRes = await fetch(DRIVE_BASE + '/' + doc.id + '/export?mimeType=text/plain', { headers:{ 'Authorization':'Bearer ' + accessToken } });
   var text = textRes.ok ? await textRes.text() : '';
@@ -592,11 +592,11 @@ function parseReceiptText(text) {
   var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
   var storeName = lines[0] || '';
   var purchaseDate = new Date().toISOString().slice(0,10);
-  var dm = text.match(/(\d{4})[\/\-年](\d{1,2})[\/\-月](\d{1,2})/);
+  var dm = text.match(/(\d{4})[\/\-&#24180;](\d{1,2})[\/\-&#26376;](\d{1,2})/);
   if (dm) purchaseDate = dm[1] + '-' + String(dm[2]).padStart(2,'0') + '-' + String(dm[3]).padStart(2,'0');
   var items = [];
   lines.forEach(function(line) {
-    var m = line.match(/^(.+?)\s+¥?\s*([\d,]+)\s*$/);
+    var m = line.match(/^(.+?)\s+&#165;?\s*([\d,]+)\s*$/);
     if (m) { var price = parseInt(m[2].replace(/,/g,'')); if (price > 0 && price < 100000) items.push({ name:m[1].trim(), price:price, qty:1 }); }
   });
   return { storeName:storeName, purchaseDate:purchaseDate, items:items };
@@ -615,9 +615,9 @@ function addOcrItemRow(item) {
   var idx = _ocrItemCount++;
   document.getElementById('ocr-items-container').insertAdjacentHTML('beforeend',
     '<div class="ocr-item-row" id="ocr-row-' + idx + '"><div class="row g-1">'
-    + '<div class="col-12"><label>商品名</label><input type="text" class="form-control form-control-sm ocr-item-name" value="' + escHtml(item&&item.name||'') + '" placeholder="商品名"></div>'
-    + '<div class="col-6"><label>単価 (円)</label><input type="number" class="form-control form-control-sm ocr-item-price" value="' + (item&&item.price||'') + '"></div>'
-    + '<div class="col-4"><label>数量</label><input type="number" class="form-control form-control-sm ocr-item-qty" value="' + (item&&item.qty||1) + '" min="1"></div>'
+    + '<div class="col-12"><label>&#21830;&#21697;&#21517;</label><input type="text" class="form-control form-control-sm ocr-item-name" value="' + escHtml(item&&item.name||'') + '" placeholder="&#21830;&#21697;&#21517;"></div>'
+    + '<div class="col-6"><label>&#21336;&#20385; (&#20870;)</label><input type="number" class="form-control form-control-sm ocr-item-price" value="' + (item&&item.price||'') + '"></div>'
+    + '<div class="col-4"><label>&#25968;&#37327;</label><input type="number" class="form-control form-control-sm ocr-item-qty" value="' + (item&&item.qty||1) + '" min="1"></div>'
     + '<div class="col-2 d-flex align-items-end pb-1"><button class="btn btn-sm btn-outline-danger w-100" onclick="removeOcrRow(' + idx + ')"><i class="bi bi-trash3"></i></button></div>'
     + '</div></div>');
 }
@@ -632,22 +632,22 @@ async function confirmOCR() {
     var qty   = parseInt(row.querySelector('.ocr-item-qty').value) || 1;
     if (name) items.push([name, qty, price, date, storeName]);
   });
-  if (!items.length) { showToast('商品が1件もありません', 'warning'); return; }
+  if (!items.length) { showToast('&#21830;&#21697;&#12364;1&#20214;&#12418;&#12354;&#12426;&#12414;&#12379;&#12435;', 'warning'); return; }
   bootstrap.Modal.getInstance(document.getElementById('ocrModal')).hide();
-  showSpinner('在庫に登録中...');
+  showSpinner('&#22312;&#24235;&#12395;&#30331;&#37682;&#20013;...');
   try {
-    await sheetAppend('在庫!A:E', items);
-    hideSpinner(); showToast(items.length + '件の商品を在庫に登録しました', 'success'); refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('登録エラー: ' + e.message, 'danger'); }
+    await sheetAppend('&#22312;&#24235;!A:E', items);
+    hideSpinner(); showToast(items.length + '&#20214;&#12398;&#21830;&#21697;&#12434;&#22312;&#24235;&#12395;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', 'success'); refreshDashboard();
+  } catch(e) { hideSpinner(); showToast('&#30331;&#37682;&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 
 // ===== GMAIL =====
 async function scanGmail() {
-  showSpinner('Gmailをスキャン中...');
+  showSpinner('Gmail&#12434;&#12473;&#12461;&#12515;&#12531;&#20013;...');
   try {
-    var q = encodeURIComponent('subject:(購入 OR 注文 OR お買い上げ OR お受け取り) newer_than:30d');
+    var q = encodeURIComponent('subject:(&#36092;&#20837; OR &#27880;&#25991; OR &#12362;&#36023;&#12356;&#19978;&#12370; OR &#12362;&#21463;&#12369;&#21462;&#12426;) newer_than:30d');
     var list = await api('GET', GMAIL_BASE + '/messages?q=' + q + '&maxResults=20');
-    if (!list || !list.messages || !list.messages.length) { hideSpinner(); showToast('該当のメールが見つかりませんでした', 'info'); return; }
+    if (!list || !list.messages || !list.messages.length) { hideSpinner(); showToast('&#35442;&#24403;&#12398;&#12513;&#12540;&#12523;&#12364;&#35211;&#12388;&#12363;&#12426;&#12414;&#12379;&#12435;&#12391;&#12375;&#12383;', 'info'); return; }
     var saved = 0;
     for (var i = 0; i < Math.min(list.messages.length, 10); i++) {
       var msg = await api('GET', GMAIL_BASE + '/messages/' + list.messages[i].id + '?format=full');
@@ -655,17 +655,17 @@ async function scanGmail() {
       var parsed = parseGmail(msg);
       if (parsed) {
         var saleId = 'gmail_' + msg.id;
-        var rows = await sheetAll('売上');
+        var rows = await sheetAll('&#22770;&#19978;');
         if (!rows.some(function(r){ return r[0] === saleId; })) {
-          await sheetAppend('売上!A:I', [[saleId, parsed.name, parsed.price, 0, parsed.platform, parsed.date, '', 0, 0]]);
+          await sheetAppend('&#22770;&#19978;!A:I', [[saleId, parsed.name, parsed.price, 0, parsed.platform, parsed.date, '', 0, 0]]);
           saved++;
         }
       }
     }
     hideSpinner();
-    showToast(list.messages.length + '件確認、' + saved + '件を新規登録しました', saved > 0 ? 'success' : 'info');
+    showToast(list.messages.length + '&#20214;&#30906;&#35469;&#12289;' + saved + '&#20214;&#12434;&#26032;&#35215;&#30331;&#37682;&#12375;&#12414;&#12375;&#12383;', saved > 0 ? 'success' : 'info');
     if (saved > 0) refreshDashboard();
-  } catch(e) { hideSpinner(); showToast('Gmailエラー: ' + e.message, 'danger'); }
+  } catch(e) { hideSpinner(); showToast('Gmail&#12456;&#12521;&#12540;: ' + e.message, 'danger'); }
 }
 function parseGmail(msg) {
   var headers = {};
@@ -673,14 +673,14 @@ function parseGmail(msg) {
   var subject = headers['subject'] || '';
   var date = headers['date'] ? new Date(headers['date']).toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
   var body = getBody(msg.payload);
-  var platform = 'その他';
-  if (subject.includes('メルカリ') || body.includes('mercari')) platform = 'メルカリ';
-  else if (subject.includes('楽天') || body.includes('rakuten')) platform = '楽天';
+  var platform = '&#12381;&#12398;&#20182;';
+  if (subject.includes('&#12513;&#12523;&#12459;&#12522;') || body.includes('mercari')) platform = '&#12513;&#12523;&#12459;&#12522;';
+  else if (subject.includes('&#27005;&#22825;') || body.includes('rakuten')) platform = '&#27005;&#22825;';
   else if (/amazon/i.test(subject + body)) platform = 'Amazon';
-  else if (subject.includes('ヤフオク') || subject.includes('フリマ')) platform = 'ヤフオク';
-  var pm = body.match(/[¥￥]\s*([\d,]+)/);
+  else if (subject.includes('&#12516;&#12501;&#12458;&#12463;') || subject.includes('&#12501;&#12522;&#12510;')) platform = '&#12516;&#12501;&#12458;&#12463;';
+  var pm = body.match(/[&#165;&#65509;]\s*([\d,]+)/);
   var price = pm ? parseInt(pm[1].replace(/,/g,'')) : 0;
-  var nm = subject.match(/[「『]([^」』]{2,30})[」』]/);
+  var nm = subject.match(/[&#12300;&#12302;]([^&#12301;&#12303;]{2,30})[&#12301;&#12303;]/);
   var name = nm ? nm[1] : subject.slice(0, 30);
   if (!name || price <= 0) return null;
   return { name:name, price:price, platform:platform, date:date };
@@ -698,11 +698,11 @@ function saveSettings() {
   localStorage.setItem('clientId', cfg.clientId);
   localStorage.setItem('spreadsheetId', cfg.spreadsheetId);
   updateSsLink();
-  showToast('設定を保存しました', 'success');
+  showToast('&#35373;&#23450;&#12434;&#20445;&#23384;&#12375;&#12414;&#12375;&#12383;', 'success');
 }
 
 // ===== UTILS =====
-function showSpinner(msg) { document.getElementById('spinner-msg').textContent = msg || '処理中...'; document.getElementById('spinner-overlay').classList.add('show'); }
+function showSpinner(msg) { document.getElementById('spinner-msg').textContent = msg || '&#20966;&#29702;&#20013;...'; document.getElementById('spinner-overlay').classList.add('show'); }
 function hideSpinner() { document.getElementById('spinner-overlay').classList.remove('show'); }
 function showToast(message, type) {
   type = type || 'success';
@@ -715,7 +715,7 @@ function showToast(message, type) {
   toast.show();
   el.addEventListener('hidden.bs.toast', function(){ el.remove(); });
 }
-function fmt(n) { return '¥' + Number(n).toLocaleString('ja-JP'); }
+function fmt(n) { return '&#165;' + Number(n).toLocaleString('ja-JP'); }
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ===== AUTO SIGNIN =====
