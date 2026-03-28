@@ -697,19 +697,78 @@ function parseGmail(msg) {
   var headers = {};
   (msg.payload.headers||[]).forEach(function(h){ headers[h.name.toLowerCase()] = h.value; });
   var subject = headers['subject'] || '';
-  var date = headers['date'] ? new Date(headers['date']).toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
-  var body = getBody(msg.payload);
+  var from    = (headers['from'] || '').toLowerCase();
+  var date    = headers['date'] ? new Date(headers['date']).toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
+  var body    = getBody(msg.payload);
+
   var platform = '\u305D\u306E\u4ED6';
-  if (subject.includes('\u30E1\u30EB\u30AB\u30EA') || body.includes('mercari')) platform = '\u30E1\u30EB\u30AB\u30EA';
-  else if (subject.includes('\u697D\u5929') || body.includes('rakuten')) platform = '\u697D\u5929';
-  else if (/amazon/i.test(subject + body)) platform = 'Amazon';
-  else if (subject.includes('\u30E4\u30D5\u30AA\u30AF') || subject.includes('\u30D5\u30EA\u30DE')) platform = '\u30E4\u30D5\u30AA\u30AF';
-  var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/) || body.match(/\u5408\u8A08[^\d]*(\d[\d,]*)/) || body.match(/(\d{3,6})\s*\u5186/);
-  var price = pm ? parseInt(pm[1].replace(/,/g,'')) : 0;
-  var nm = subject.match(/[\u300C\u300E]([^\u300D\u300F]{2,30})[\u300D\u300F]/);
-  var name = nm ? nm[1] : subject.trim().slice(0, 40);
+  var name = '';
+  var price = 0;
+
+  if (/mercari/i.test(from)) {
+    // ===== \u30E1\u30EB\u30AB\u30EA =====
+    platform = '\u30E1\u30EB\u30AB\u30EA';
+    var nm = body.match(/\u5546\u54C1\u540D\s*:\s*(.+)/);
+    if (nm) name = nm[1].trim();
+    var pm = body.match(/\u5546\u54C1\u4FA1\u683C\s*:\s*([\d,]+)\s*\u5186/);
+    if (pm) price = parseInt(pm[1].replace(/,/g,''));
+
+  } else if (/yahoo/i.test(from)) {
+    // ===== \u30E4\u30D5\u30FC\u30AA\u30FC\u30AF / \u30E4\u30D5\u30FC\u30D5\u30EA\u30DE =====
+    platform = /\u30D5\u30EA\u30DE|fleamarket/i.test(body + subject) ? '\u30E4\u30D5\u30FC\u30D5\u30EA\u30DE' : '\u30E4\u30D5\u30FC\u30AA\u30FC\u30AF';
+    // \u5546\u54C1\u30BF\u30A4\u30C8\u30EB \uFF1A XXX
+    var nm = body.match(/\u5546\u54C1\u30BF\u30A4\u30C8\u30EB\s*[\uFF1A:]\s*(.+)/);
+    if (nm) name = nm[1].trim();
+    else {
+      var nm2 = body.match(/\u5546\u54C1\u540D\s*[\uFF1A:]\s*(.+)/);
+      if (nm2) name = nm2[1].trim();
+    }
+    // \u53D7\u53D6\u91D1\u984D \uFF1A XXXX \u5186
+    var pm = body.match(/\u53D7\u53D6\u91D1\u984D\s*[\uFF1A:]\s*([\d,]+)\s*\u5186/);
+    if (pm) price = parseInt(pm[1].replace(/,/g,''));
+    else {
+      var pm2 = body.match(/\u5546\u54C1\u4FA1\u683C\s*[\uFF1A:]\s*([\d,]+)\s*\u5186/);
+      if (pm2) price = parseInt(pm2[1].replace(/,/g,''));
+    }
+
+  } else if (/amazon/i.test(from)) {
+    // ===== Amazon =====
+    platform = 'Amazon';
+    var nm = subject.match(/[\u300C\u300E\u300A\u3008]([^\u300D\u300F\u300B\u3009]{2,50})[\u300D\u300F\u300B\u3009]/);
+    if (nm) name = nm[1];
+    else name = subject.trim().slice(0, 50);
+    var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/) || body.match(/\u5408\u8A08[^\d]*([\d,]+)/);
+    if (pm) price = parseInt(pm[1].replace(/,/g,''));
+
+  } else if (/rakuten/i.test(from)) {
+    // ===== \u697D\u5929 =====
+    platform = '\u697D\u5929';
+    var nm = subject.match(/[\u300C\u300E]([^\u300D\u300F]{2,50})[\u300D\u300F]/);
+    if (nm) name = nm[1];
+    else name = subject.trim().slice(0, 50);
+    var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/) || body.match(/\u5546\u54C1\u4FA1\u683C[^\d]*([\d,]+)/);
+    if (pm) price = parseInt(pm[1].replace(/,/g,''));
+
+  } else {
+    // ===== \u305D\u306E\u4ED6\u30FB\u6C4E\u7528 =====
+    if (/mercari/i.test(subject + body)) platform = '\u30E1\u30EB\u30AB\u30EA';
+    else if (/amazon/i.test(subject + body)) platform = 'Amazon';
+    else if (/\u697D\u5929/i.test(subject + body) || /rakuten/i.test(body)) platform = '\u697D\u5929';
+    else if (/\u30E4\u30D5/i.test(subject + body)) platform = '\u30E4\u30D5\u30FC\u30AA\u30FC\u30AF';
+    var nm = body.match(/\u5546\u54C1\u540D\s*[\uFF1A:]\s*(.+)/) || body.match(/\u5546\u54C1\u30BF\u30A4\u30C8\u30EB\s*[\uFF1A:]\s*(.+)/);
+    if (nm) name = nm[1].trim();
+    else {
+      var nm2 = subject.match(/[\u300C\u300E]([^\u300D\u300F]{2,50})[\u300D\u300F]/);
+      name = nm2 ? nm2[1] : subject.trim().slice(0, 50);
+    }
+    var pm = body.match(/\u53D7\u53D6\u91D1\u984D\s*[\uFF1A:]\s*([\d,]+)\s*\u5186/)
+          || body.match(/\u5546\u54C1\u4FA1\u683C\s*[\uFF1A:]\s*([\d,]+)\s*\u5186/)
+          || body.match(/[\u00A5\uFFE5]\s*([\d,]+)/)
+          || body.match(/\u5408\u8A08[^\d]*([\d,]+)/);
+    if (pm) price = parseInt(pm[1].replace(/,/g,''));
+  }
+
   if (!name) return null;
-  // \u4fa1\u683c\u304c\u4f4e\u3059\u304e\u308b\u5834\u5408\u3084\u660e\u3089\u304b\u306b\u5546\u54c1\u3067\u306a\u3044\u5834\u5408\u306f\u9664\u5916
   if (price > 0 && price < 100) return null;
   return { name:name, price:price, platform:platform, date:date };
 }
