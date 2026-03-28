@@ -306,6 +306,10 @@ async function api(method, url, body) {
   if (body !== undefined) opts.body = JSON.stringify(body);
   var res = await fetch(url, opts);
   if (res.status === 204) return {};
+  if (res.status === 401) {
+    showToast('\u8A8D\u8A3C\u304C\u5207\u308C\u307E\u3057\u305F\u3002\u518D\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044\u3002', 'danger');
+    handleSignOut(); throw new Error('Unauthorized');
+  }
   if (!res.ok) { var e = await res.json().catch(function(){ return {}; }); throw new Error((e.error && e.error.message) || res.statusText); }
   return res.json();
 }
@@ -462,14 +466,24 @@ function renderSaleRow(s, idx) {
       + '<button class="sale-action-btn ms-1" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:.72rem" onclick="openSalePurchaseModal(' + idx + ')"><i class="bi bi-box-seam me-1"></i>\u4ED5\u5165\u308C\u767B\u9332</button>';
   }
   var unlinkHtml = s.linked ? '<button onclick="unlinkSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer"><i class="bi bi-scissors me-1"></i>\u7D10\u4ED8\u3051\u89E3\u9664</button>' : '';
-  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' \u30FB ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + '</div></div>';
+  var deleteHtml = '<button onclick="deleteSale(' + idx + ')" style="background:#fff0f0;border:1px solid #f5c6cb;border-radius:6px;padding:3px 10px;font-size:.75rem;color:#c0392b;cursor:pointer" title="\u524A\u9664"><i class="bi bi-trash3"></i></button>';
+  return '<div class="sale-row" id="sale-row-' + idx + '"><div class="d-flex justify-content-between align-items-start"><div style="flex:1;min-width:0"><div class="sale-name">' + escHtml(s.name) + '</div><div class="sale-meta">' + s.date + ' \u30FB ' + escHtml(s.platform) + '</div></div><div class="text-end" style="flex-shrink:0;padding-left:6px"><div class="sale-price">' + fmt(s.salePrice) + '</div>' + badge + '</div></div>' + profitHtml + '<div class="d-flex mt-1 gap-1 flex-wrap">' + linkHtml + unlinkHtml + deleteHtml + '</div></div>';
 }
 
 async function linkSaleSelect(idx, sel) { if (sel.value) await linkSale(idx, sel.value); }
 async function linkSale(idx, invName) {
   var s = salesData[idx];
   var inv = inventoryData.find(function(i){ return i.name === invName; });
-  var cost = inv ? inv.costPrice : 0;
+  var cost = 0;
+  if (inv) {
+    cost = inv.costPrice;
+  } else {
+    try {
+      var irows = await sheetAll('\u5728\u5EAB');
+      var irow = irows.find(function(r){ return r[0] === invName; });
+      if (irow) cost = Number(irow[2]) || 0;
+    } catch(e) {}
+  }
   var profit = s.salePrice - Math.round(s.salePrice * 0.10) - s.shipping - cost;
   showSpinner('\u7D10\u4ED8\u3051\u4E2D...');
   try {
@@ -487,6 +501,16 @@ async function unlinkSale(idx) {
     hideSpinner(); showToast('\u7D10\u4ED8\u3051\u3092\u89E3\u9664\u3057\u307E\u3057\u305F', 'success'); renderSalesList();
   } catch(e) { hideSpinner(); showToast('\u89E3\u9664\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
 }
+async function deleteSale(idx) {
+  if (!confirm('\u3053\u306E\u58F2\u4E0A\u30C7\u30FC\u30BF\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F')) return;
+  var s = salesData[idx];
+  showSpinner('\u524A\u9664\u4E2D...');
+  try {
+    await sheetUpdate('\u58F2\u4E0A!A' + s._row + ':I' + s._row, [['', '', '', '', '', '', '', '', '']]);
+    hideSpinner(); showToast('\u524A\u9664\u3057\u307E\u3057\u305F', 'success'); loadSales();
+  } catch(e) { hideSpinner(); showToast('\u524A\u9664\u30A8\u30E9\u30FC: ' + e.message, 'danger'); }
+}
+
 function openSalePurchaseModal(idx) {
   _salePurchaseIdx = idx;
   var s = salesData[idx];
@@ -596,8 +620,8 @@ function parseReceiptText(text) {
   if (dm) purchaseDate = dm[1] + '-' + String(dm[2]).padStart(2,'0') + '-' + String(dm[3]).padStart(2,'0');
   var items = [];
   lines.forEach(function(line) {
-    var m = line.match(/^(.+?)\s+\u00A5?\s*([\d,]+)\s*$/);
-    if (m) { var price = parseInt(m[2].replace(/,/g,'')); if (price > 0 && price < 100000) items.push({ name:m[1].trim(), price:price, qty:1 }); }
+    var m = line.match(/^(.+?)\s+[\u00A5\uFFE5]?\s*([\d,]+)\s*(?:\u5186)?\s*$/) || line.match(/^(.+?)\s+([\d,]+)\s*\u5186\s*$/);
+    if (m) { var price = parseInt((m[2]||m[2]).replace(/,/g,'')); if (price > 0 && price < 200000) items.push({ name:m[1].trim(), price:price, qty:1 }); }
   });
   return { storeName:storeName, purchaseDate:purchaseDate, items:items };
 }
@@ -645,9 +669,11 @@ async function confirmOCR() {
 async function scanGmail() {
   showSpinner('Gmail\u3092\u30B9\u30AD\u30E3\u30F3\u4E2D...');
   try {
-    var q = encodeURIComponent('subject:(\u8CFC\u5165 OR \u6CE8\u6587 OR \u304A\u8CB7\u3044\u4E0A\u3052 OR \u304A\u53D7\u3051\u53D6\u308A) newer_than:30d');
+    var q = encodeURIComponent('(from:(mercari.com OR fril.jp OR yahoo.co.jp OR amazon.co.jp OR amazon.com OR rakuten.co.jp) OR subject:(\u8CFC\u5165\u3055\u308C\u307E\u3057\u305F OR \u843D\u672D\u3055\u308C\u307E\u3057\u305F OR \u6CE8\u6587\u3092\u627F\u308A\u307E\u3057\u305F)) newer_than:30d');
     var list = await api('GET', GMAIL_BASE + '/messages?q=' + q + '&maxResults=20');
     if (!list || !list.messages || !list.messages.length) { hideSpinner(); showToast('\u8A72\u5F53\u306E\u30E1\u30FC\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F', 'info'); return; }
+    var existingRows = await sheetAll('\u58F2\u4E0A');
+    var existingIds = new Set(existingRows.map(function(r){ return r[0]; }));
     var saved = 0;
     for (var i = 0; i < Math.min(list.messages.length, 10); i++) {
       var msg = await api('GET', GMAIL_BASE + '/messages/' + list.messages[i].id + '?format=full');
@@ -655,9 +681,9 @@ async function scanGmail() {
       var parsed = parseGmail(msg);
       if (parsed) {
         var saleId = 'gmail_' + msg.id;
-        var rows = await sheetAll('\u58F2\u4E0A');
-        if (!rows.some(function(r){ return r[0] === saleId; })) {
+        if (!existingIds.has(saleId)) {
           await sheetAppend('\u58F2\u4E0A!A:I', [[saleId, parsed.name, parsed.price, 0, parsed.platform, parsed.date, '', 0, 0]]);
+          existingIds.add(saleId);
           saved++;
         }
       }
@@ -678,15 +704,25 @@ function parseGmail(msg) {
   else if (subject.includes('\u697D\u5929') || body.includes('rakuten')) platform = '\u697D\u5929';
   else if (/amazon/i.test(subject + body)) platform = 'Amazon';
   else if (subject.includes('\u30E4\u30D5\u30AA\u30AF') || subject.includes('\u30D5\u30EA\u30DE')) platform = '\u30E4\u30D5\u30AA\u30AF';
-  var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/);
+  var pm = body.match(/[\u00A5\uFFE5]\s*([\d,]+)/) || body.match(/\u5408\u8A08[^\d]*(\d[\d,]*)/) || body.match(/(\d{3,6})\s*\u5186/);
   var price = pm ? parseInt(pm[1].replace(/,/g,'')) : 0;
   var nm = subject.match(/[\u300C\u300E]([^\u300D\u300F]{2,30})[\u300D\u300F]/);
-  var name = nm ? nm[1] : subject.slice(0, 30);
-  if (!name || price <= 0) return null;
+  var name = nm ? nm[1] : subject.trim().slice(0, 40);
+  if (!name) return null;
+  // \u4fa1\u683c\u304c\u4f4e\u3059\u304e\u308b\u5834\u5408\u3084\u660e\u3089\u304b\u306b\u5546\u54c1\u3067\u306a\u3044\u5834\u5408\u306f\u9664\u5916
+  if (price > 0 && price < 100) return null;
   return { name:name, price:price, platform:platform, date:date };
 }
 function getBody(payload) {
-  if (payload.body && payload.body.data) return atob(payload.body.data.replace(/-/g,'+').replace(/_/g,'/'));
+  if (payload.body && payload.body.data) {
+    try {
+      var b64 = payload.body.data.replace(/-/g,'+').replace(/_/g,'/');
+      var bin = atob(b64);
+      var bytes = new Uint8Array(bin.length);
+      for (var i=0; i<bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8').decode(bytes);
+    } catch(e) { return ''; }
+  }
   if (payload.parts) { for (var i=0; i<payload.parts.length; i++) { var t = getBody(payload.parts[i]); if (t) return t; } }
   return '';
 }
